@@ -28,6 +28,7 @@
         <hutool.version>5.8.8</hutool.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <druid-spring-boot-starter.version>1.2.18</druid-spring-boot-starter.version>
+        <jwt.version>0.9.1</jwt.version>
     </properties>
 
     <!--使用依赖-->
@@ -77,6 +78,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!-- jwt -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

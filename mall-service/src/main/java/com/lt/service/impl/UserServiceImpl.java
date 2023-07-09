@@ -1,13 +1,26 @@
 package com.lt.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lt.common.BaseResponse;
+import com.lt.common.ErrorCode;
+import com.lt.dto.user.UserLoginDTO;
+import com.lt.dto.user.UserRegisterDTO;
 import com.lt.entity.User;
+import com.lt.exception.BusinessException;
 import com.lt.mapper.UserMapper;
 
 import com.lt.service.UserService;
 
+import com.lt.utils.JwtUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
+
+import javax.annotation.Resource;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author teng
@@ -17,7 +30,40 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
+    @Resource
+    private UserMapper userMapper;
 
+    @Override
+    public Integer register(UserRegisterDTO userRegisterDTO) {
+        User user = new User();
+        BeanUtils.copyProperties(userRegisterDTO, user);
+        String userPassword = userRegisterDTO.getUserPassword();
+        userPassword = DigestUtils.md5DigestAsHex(userPassword.getBytes(StandardCharsets.UTF_8));
+        user.setUserPassword(userPassword);
+        // 插入数据
+        userMapper.insert(user);
+        return user.getUserId();
+    }
+
+    @Override
+    public String login(UserLoginDTO userLoginDTO) {
+        String userName = userLoginDTO.getUserName();
+        String userPassword = userLoginDTO.getUserPassword();
+        userPassword = DigestUtils.md5DigestAsHex(userPassword.getBytes(StandardCharsets.UTF_8));
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userName", userName);
+        queryWrapper.eq("userPassword", userPassword);
+        User user = userMapper.selectOne(queryWrapper);
+        if (user == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "用户名或密码错误");
+        }
+        // 生成token
+        String token = JwtUtil.getToken(user.getUserId());
+        if (StringUtils.isBlank(token)) {
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "登录失败");
+        }
+        return token;
+    }
 }
 
 
