@@ -3,6 +3,7 @@ package com.lt.controller;
 import com.lt.common.BaseResponse;
 import com.lt.common.ErrorCode;
 import com.lt.common.ResultUtils;
+import com.lt.dto.user.UpdateUserDTO;
 import com.lt.dto.user.UserLoginDTO;
 import com.lt.dto.user.UserRegisterDTO;
 import com.lt.entity.User;
@@ -16,11 +17,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 /**
@@ -79,22 +82,60 @@ public class UserController {
 
     @PostMapping("/logout")
     @ApiOperation("用户退出")
-    public BaseResponse<String> logout(HttpServletRequest request) {
+    public BaseResponse<Boolean> logout(HttpServletRequest request) {
         ServletContext servletContext = request.getServletContext();
         String token = request.getHeader("Authorization");
         servletContext.removeAttribute(token);
         Claims claimsBody = JwtUtil.getClaimsBody(token);
         claimsBody.setExpiration(new Date(System.currentTimeMillis()));
-        return ResultUtils.success("成功");
+        return ResultUtils.success(Boolean.TRUE);
     }
 
     @GetMapping("/getUserVO")
-    @ApiOperation("获取用户信息")
+    @ApiOperation("获取当前登录用户信息")
     public BaseResponse<UserVO> getUserVO() {
         Integer userId = UserThreadLocalUtil.getUserId();
         User user = userService.getById(userId);
+        if (user == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "当前用户不存在");
+        }
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
         return ResultUtils.success(userVO);
+    }
+
+    @PostMapping("/updateUser")
+    @ApiOperation("修改个人信息")
+    public BaseResponse<Boolean> updateUser(@RequestBody UpdateUserDTO updateUserDTO) {
+        if (updateUserDTO == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        String userNickName = updateUserDTO.getUserNickName();
+        String userRealname = updateUserDTO.getUserRealname();
+        String userPassword = updateUserDTO.getUserPassword();
+        String confirmPassword = updateUserDTO.getConfirmPassword();
+        Integer userGender = updateUserDTO.getUserGender();
+        Date userBirthday = updateUserDTO.getUserBirthday();
+        String userAddress = updateUserDTO.getUserAddress();
+        String userHomePlace = updateUserDTO.getUserHomePlace();
+        if (StringUtils.isAnyBlank(userNickName, userRealname, userPassword, confirmPassword, userAddress, userHomePlace)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请填写完整的用户信息");
+        }
+        if (userGender == null || userBirthday == null || (userGender != 0 && userGender != 1)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请填写完整的用户信息");
+        }
+        if (!userPassword.equals(confirmPassword)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "登录密码与确认密码不相同");
+        }
+        Integer userId = UserThreadLocalUtil.getUserId();
+        User user = userService.getById(userId);
+        if (user == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "当前用户不存在");
+        }
+        BeanUtils.copyProperties(updateUserDTO, user);
+        userPassword = DigestUtils.md5DigestAsHex(userPassword.getBytes(StandardCharsets.UTF_8));
+        user.setUserPassword(userPassword);
+        userService.updateById(user);
+        return ResultUtils.success(Boolean.TRUE);
     }
 }
