@@ -3,6 +3,7 @@ package com.lt.interceptor;
 import com.lt.common.ErrorCode;
 import com.lt.exception.BusinessException;
 import com.lt.utils.JwtUtil;
+import com.lt.utils.UserThreadLocalUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -36,6 +37,13 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         Integer userId = (Integer) claimsBody.get("userId");
         log.info("token 解析成功，userId = {}", userId);
+        UserThreadLocalUtil.setUserId(userId);
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        UserThreadLocalUtil.clear();
+        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }

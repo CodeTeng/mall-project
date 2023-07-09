@@ -17,6 +17,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  jackson:
+    # 全局日期格式
+    date-format: yyyy-MM-dd
   servlet:
     # 上传文件限制
     multipart:

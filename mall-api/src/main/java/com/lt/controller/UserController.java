@@ -5,13 +5,17 @@ import com.lt.common.ErrorCode;
 import com.lt.common.ResultUtils;
 import com.lt.dto.user.UserLoginDTO;
 import com.lt.dto.user.UserRegisterDTO;
+import com.lt.entity.User;
 import com.lt.exception.BusinessException;
 import com.lt.service.UserService;
 import com.lt.utils.JwtUtil;
+import com.lt.utils.UserThreadLocalUtil;
+import com.lt.vo.UserVO;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -82,5 +86,15 @@ public class UserController {
         Claims claimsBody = JwtUtil.getClaimsBody(token);
         claimsBody.setExpiration(new Date(System.currentTimeMillis()));
         return ResultUtils.success("成功");
+    }
+
+    @GetMapping("/getUserVO")
+    @ApiOperation("获取用户信息")
+    public BaseResponse<UserVO> getUserVO() {
+        Integer userId = UserThreadLocalUtil.getUserId();
+        User user = userService.getById(userId);
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user, userVO);
+        return ResultUtils.success(userVO);
     }
 }
