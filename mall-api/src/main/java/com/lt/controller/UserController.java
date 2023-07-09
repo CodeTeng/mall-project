@@ -10,14 +10,12 @@ import com.lt.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 /**
@@ -73,5 +71,4 @@ public class UserController {
         String token = userService.login(userLoginDTO);
         return ResultUtils.success(token);
     }
-
 }

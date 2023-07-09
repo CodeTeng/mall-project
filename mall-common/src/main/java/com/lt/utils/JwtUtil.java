@@ -35,7 +35,7 @@ public class JwtUtil {
      */
     public static String getToken(Integer id) {
         Map<String, Object> claimMaps = new HashMap<>();
-        claimMaps.put("id", id);
+        claimMaps.put("userId", id);
         long currentTime = System.currentTimeMillis();
         return Jwts.builder()
                 // 签发时间
@@ -124,8 +124,8 @@ public class JwtUtil {
             // 判断是否过期
             int res = JwtUtil.verifyToken(claimsBody);
             if (res < 1) {
-                Integer id = (Integer) claimsBody.get("id");
-                System.out.println("token 解析成功，用户id=" + id);
+                Integer id = (Integer) claimsBody.get("userId");
+                System.out.println("token 解析成功，userId = " + id);
             } else {
                 System.out.println("token 已过期");
             }
