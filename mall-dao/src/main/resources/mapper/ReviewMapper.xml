@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lt.mapper.ReviewMapper">
+
+    <resultMap id="BaseResultMap" type="com.lt.entity.Review">
+        <id property="reviewId" column="reviewId" jdbcType="INTEGER"/>
+        <result property="reviewContent" column="reviewContent" jdbcType="VARCHAR"/>
+        <result property="reviewCreatedate" column="reviewCreatedate" jdbcType="TIMESTAMP"/>
+        <result property="reviewUserId" column="reviewUserId" jdbcType="INTEGER"/>
+        <result property="reviewProductId" column="reviewProductId" jdbcType="INTEGER"/>
+        <result property="reviewOrderItemId" column="reviewOrderItemId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        reviewId,reviewContent,reviewCreatedate,
+        reviewUserId,reviewProductId,reviewOrderItemId
+    </sql>
+</mapper>

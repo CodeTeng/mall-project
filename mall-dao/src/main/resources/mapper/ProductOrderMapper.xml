@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lt.mapper.ProductOrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.lt.entity.ProductOrder">
+        <id property="productOrderId" column="productOrderId" jdbcType="INTEGER"/>
+        <result property="productOrderCode" column="productOrderCode" jdbcType="VARCHAR"/>
+        <result property="productOrderAddress" column="productOrderAddress" jdbcType="CHAR"/>
+        <result property="productOrderDetailAddress" column="productOrderDetailAddress" jdbcType="VARCHAR"/>
+        <result property="productOrderPost" column="productOrderPost" jdbcType="CHAR"/>
+        <result property="productOrderReceiver" column="productOrderReceiver" jdbcType="VARCHAR"/>
+        <result property="productOrderMobile" column="productOrderMobile" jdbcType="CHAR"/>
+        <result property="productOrderPayDate" column="productOrderPayDate" jdbcType="TIMESTAMP"/>
+        <result property="productOrderDeliveryDate" column="productOrderDeliveryDate" jdbcType="TIMESTAMP"/>
+        <result property="productOrderConfirmDate" column="productOrderConfirmDate" jdbcType="TIMESTAMP"/>
+        <result property="productOrderStatus" column="productOrderStatus" jdbcType="TINYINT"/>
+        <result property="productOrderUserId" column="productOrderUserId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        productOrderId,productOrderCode,productOrderAddress,
+        productOrderDetailAddress,productOrderPost,productOrderReceiver,
+        productOrderMobile,productOrderPayDate,productOrderDeliveryDate,
+        productOrderConfirmDate,productOrderStatus,productOrderUserId
+    </sql>
+</mapper>

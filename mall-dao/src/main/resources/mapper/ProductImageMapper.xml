@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lt.mapper.ProductImageMapper">
+
+    <resultMap id="BaseResultMap" type="com.lt.entity.ProductImage">
+        <id property="productImageId" column="productImageId" jdbcType="INTEGER"/>
+        <result property="productImageType" column="productImageType" jdbcType="TINYINT"/>
+        <result property="productImageSrc" column="productImageSrc" jdbcType="VARCHAR"/>
+        <result property="productImageProductId" column="productImageProductId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        productImageId,productImageType,productImageSrc,
+        productImageProductId
+    </sql>
+</mapper>

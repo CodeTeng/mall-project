@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lt.mapper.AddressMapper">
+
+    <resultMap id="BaseResultMap" type="com.lt.entity.Address">
+        <id property="addressAreaId" column="addressAreaId" jdbcType="CHAR"/>
+        <result property="addressName" column="addressName" jdbcType="VARCHAR"/>
+        <result property="addressRegionId" column="addressRegionId" jdbcType="CHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        addressAreaId,addressName,addressRegionId
+    </sql>
+</mapper>

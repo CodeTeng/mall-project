@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lt.mapper.ProductOrderItemMapper">
+
+    <resultMap id="BaseResultMap" type="com.lt.entity.ProductOrderItem">
+        <id property="productOrderItemId" column="productOrderItemId" jdbcType="INTEGER"/>
+        <result property="productOrderItemNumber" column="productOrderItemNumber" jdbcType="SMALLINT"/>
+        <result property="productOrderItemPrice" column="productOrderItemPrice" jdbcType="DECIMAL"/>
+        <result property="productOrderItemProductId" column="productOrderItemProductId" jdbcType="INTEGER"/>
+        <result property="productOrderItemOrderId" column="productOrderItemOrderId" jdbcType="INTEGER"/>
+        <result property="productOrderItemUserId" column="productOrderItemUserId" jdbcType="INTEGER"/>
+        <result property="productOrderItemUserMessage" column="productOrderItemUserMessage" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        productOrderItemId,productOrderItemNumber,productOrderItemPrice,
+        productOrderItemProductId,productOrderItemOrderId,productOrderItemUserId,
+        productOrderItemUserMessage
+    </sql>
+</mapper>

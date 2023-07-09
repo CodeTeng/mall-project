@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lt.mapper.CategoryMapper">
+
+    <resultMap id="BaseResultMap" type="com.lt.entity.Category">
+        <id property="categoryId" column="categoryId" jdbcType="INTEGER"/>
+        <result property="categoryName" column="categoryName" jdbcType="VARCHAR"/>
+        <result property="categoryImageSrc" column="categoryImageSrc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        categoryId,categoryName,categoryImageSrc
+    </sql>
+</mapper>

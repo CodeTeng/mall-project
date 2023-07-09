@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lt.mapper.PropertyMapper">
+
+    <resultMap id="BaseResultMap" type="com.lt.entity.Property">
+        <id property="propertyId" column="propertyId" jdbcType="INTEGER"/>
+        <result property="propertyName" column="propertyName" jdbcType="VARCHAR"/>
+        <result property="propertyCategoryId" column="propertyCategoryId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        propertyId,propertyName,propertyCategoryId
+    </sql>
+</mapper>
