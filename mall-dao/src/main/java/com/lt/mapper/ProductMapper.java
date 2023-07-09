@@ -3,7 +3,11 @@ package com.lt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lt.entity.Product;
+import com.lt.vo.ProductCategoryVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author teng
@@ -13,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProductMapper extends BaseMapper<Product> {
-
+    List<ProductCategoryVO> getHomeProductList(@Param("categoryId") Integer categoryId);
 }
 
 
