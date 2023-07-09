@@ -7,15 +7,16 @@ import com.lt.dto.user.UserLoginDTO;
 import com.lt.dto.user.UserRegisterDTO;
 import com.lt.exception.BusinessException;
 import com.lt.service.UserService;
+import com.lt.utils.JwtUtil;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -70,5 +71,16 @@ public class UserController {
         }
         String token = userService.login(userLoginDTO);
         return ResultUtils.success(token);
+    }
+
+    @PostMapping("/logout")
+    @ApiOperation("用户退出")
+    public BaseResponse<String> logout(HttpServletRequest request) {
+        ServletContext servletContext = request.getServletContext();
+        String token = request.getHeader("Authorization");
+        servletContext.removeAttribute(token);
+        Claims claimsBody = JwtUtil.getClaimsBody(token);
+        claimsBody.setExpiration(new Date(System.currentTimeMillis()));
+        return ResultUtils.success("成功");
     }
 }
