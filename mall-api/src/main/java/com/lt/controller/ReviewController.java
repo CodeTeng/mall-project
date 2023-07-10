@@ -1,11 +1,14 @@
 package com.lt.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lt.common.BaseResponse;
 import com.lt.common.ErrorCode;
 import com.lt.common.ResultUtils;
+import com.lt.dto.review.GetProductReviewDTO;
 import com.lt.dto.review.ReviewProductDTO;
 import com.lt.exception.BusinessException;
 import com.lt.service.ReviewService;
+import com.lt.vo.ReviewVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -53,5 +56,19 @@ public class ReviewController {
         }
         Long count = reviewService.getProductReviewCount(productId);
         return ResultUtils.success(count);
+    }
+
+    @GetMapping("/getPageReviewByProductId")
+    @ApiOperation("根据商品id分页获取评论数据")
+    public BaseResponse<Page<ReviewVO>> getPageReviewByProductId(GetProductReviewDTO getProductReviewDTO) {
+        if (getProductReviewDTO == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Integer productId = getProductReviewDTO.getProductId();
+        if (productId == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Page<ReviewVO> reviewVOPage = reviewService.getPageReviewByProductId(getProductReviewDTO);
+        return ResultUtils.success(reviewVOPage);
     }
 }

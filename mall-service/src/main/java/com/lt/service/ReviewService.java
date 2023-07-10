@@ -1,9 +1,12 @@
 package com.lt.service;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lt.dto.review.GetProductReviewDTO;
 import com.lt.dto.review.ReviewProductDTO;
 import com.lt.entity.Review;
+import com.lt.vo.ReviewVO;
 
 /**
  * @author teng
@@ -26,4 +29,12 @@ public interface ReviewService extends IService<Review> {
      * @return 商品评论总数
      */
     Long getProductReviewCount(Integer productId);
+
+    /**
+     * 根据商品id分页获取评论数据
+     *
+     * @param getProductReviewDTO 分页DTO
+     * @return 评论数据
+     */
+    Page<ReviewVO> getPageReviewByProductId(GetProductReviewDTO getProductReviewDTO);
 }
