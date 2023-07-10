@@ -39,7 +39,7 @@ public class FileController {
     private CosManager cosManager;
 
     @PostMapping("/upload/image")
-    @ApiOperation("图片上传")
+    @ApiOperation(value = "图片上传", notes = "图片类型有限制(jpeg, jpg, svg, png, webp)，图片大小不超过2M")
     @Transactional(rollbackFor = Exception.class)
     public BaseResponse<String> uploadImageFile(@RequestPart("file") MultipartFile multipartFile) {
         // 校验图片文件

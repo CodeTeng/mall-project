@@ -87,8 +87,6 @@ public class UserController {
         ServletContext servletContext = request.getServletContext();
         String token = request.getHeader("Authorization");
         servletContext.removeAttribute(token);
-        Claims claimsBody = JwtUtil.getClaimsBody(token);
-        claimsBody.setExpiration(new Date(System.currentTimeMillis()));
         return ResultUtils.success(Boolean.TRUE);
     }
 
