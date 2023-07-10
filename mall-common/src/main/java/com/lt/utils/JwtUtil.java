@@ -13,9 +13,9 @@ import java.util.*;
  */
 public class JwtUtil {
     /**
-     * TOKEN的有效期 12个小时 1h _表示支持的语法 可读性更强
+     * TOKEN的有效期 1个小时 1h _表示支持的语法 可读性更强
      */
-    private static final int TOKEN_TIME_OUT = 3_600 * 12;
+    private static final int TOKEN_TIME_OUT = 3_600;
 
     /**
      * 加密KEY

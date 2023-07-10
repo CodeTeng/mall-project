@@ -22,13 +22,14 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("Authorization");
+        log.info("token 获取为：{}", token);
         if (StringUtils.isBlank(token)) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR, "请先登录");
         }
         // 获取 payload 信息
         Claims claimsBody = JwtUtil.getClaimsBody(token);
         if (claimsBody == null) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR);
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR, "请先登录");
         }
         // 判断是否过期
         int res = JwtUtil.verifyToken(claimsBody);
@@ -44,6 +45,5 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         UserThreadLocalUtil.clear();
-        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }

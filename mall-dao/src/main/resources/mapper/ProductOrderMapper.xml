@@ -25,4 +25,12 @@
         productOrderMobile,productOrderPayDate,productOrderDeliveryDate,
         productOrderConfirmDate,productOrderStatus,productOrderUserId
     </sql>
+
+    <select id="getTotalTransactionCountByProductId" resultType="java.lang.Integer">
+        select count(*)
+        from productorder pt
+                 left join productorderitem poi on pt.productOrderId = poi.productOrderItemOrderId
+        where pt.productOrderStatus = 3
+          and poi.productOrderItemProductId = #{productId};
+    </select>
 </mapper>

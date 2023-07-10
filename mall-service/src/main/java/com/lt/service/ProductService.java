@@ -1,9 +1,14 @@
 package com.lt.service;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lt.dto.product.ProductSearchDTO;
 import com.lt.entity.Product;
 import com.lt.vo.HomeProductVO;
+import com.lt.vo.ProductSearchVO;
+
+import java.util.List;
 
 /**
  * @author teng
@@ -19,4 +24,12 @@ public interface ProductService extends IService<Product> {
      * @return 主页商品VO
      */
     HomeProductVO getHomeProductList(Integer categoryId);
+
+    /**
+     * 主页商品搜索
+     *
+     * @param productSearchDTO 搜索DTO
+     * @return 分页搜索商品VO
+     */
+    Page<ProductSearchVO> search(ProductSearchDTO productSearchDTO);
 }
