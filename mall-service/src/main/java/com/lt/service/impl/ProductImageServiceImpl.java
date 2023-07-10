@@ -3,7 +3,7 @@ package com.lt.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lt.entity.ProductImage;
 import com.lt.mapper.ProductImageMapper;
-import com.lt.service.ProductimageService;
+import com.lt.service.ProductImageService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
  * @createDate 2023-07-09 11:29:57
  */
 @Service
-public class ProductimageServiceImpl extends ServiceImpl<ProductImageMapper, ProductImage>
-        implements ProductimageService {
+public class ProductImageServiceImpl extends ServiceImpl<ProductImageMapper, ProductImage>
+        implements ProductImageService {
 
 }
 

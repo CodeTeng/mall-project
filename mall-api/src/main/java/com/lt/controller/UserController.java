@@ -83,7 +83,6 @@ public class UserController {
     @PostMapping("/logout")
     @ApiOperation("用户退出")
     public BaseResponse<Boolean> logout(HttpServletRequest request) {
-        // TODO 需要更改
         ServletContext servletContext = request.getServletContext();
         String token = request.getHeader("Authorization");
         servletContext.removeAttribute(token);

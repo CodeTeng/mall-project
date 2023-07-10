@@ -2,6 +2,7 @@ package com.lt.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lt.dto.review.ReviewProductDTO;
 import com.lt.entity.Review;
 
 /**
@@ -11,4 +12,10 @@ import com.lt.entity.Review;
  */
 public interface ReviewService extends IService<Review> {
 
+    /**
+     * 评价商品
+     *
+     * @param reviewProductDTO 评价商品DTO
+     */
+    void reviewProduct(ReviewProductDTO reviewProductDTO);
 }

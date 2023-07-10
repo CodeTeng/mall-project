@@ -33,4 +33,49 @@
         where pt.productOrderStatus = 3
           and poi.productOrderItemProductId = #{productId};
     </select>
+
+    <select id="getMyAllOrder" resultType="com.lt.vo.ProductOrderVO">
+        select p.productId,
+        pt.productOrderId,
+        pt.productOrderCode,
+        pt.productOrderPayDate,
+        p.productName,
+        p.productSalePrice,
+        poi.productOrderItemNumber,
+        poi.productOrderItemPrice,
+        pt.productOrderStatus
+        from productorder pt
+        left join productorderitem poi on poi.productOrderItemOrderId = pt.productOrderId
+        left join product p on poi.productOrderItemProductId = p.productId
+        <where>
+            p.productIsEnabled != 1
+            and pt.productOrderUserId = #{userId}
+            <if test="productName != null">
+                and productName like concat('%', #{productName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getMyAllOrderByType" resultType="com.lt.vo.ProductOrderVO">
+        select p.productId,
+        pt.productOrderId,
+        pt.productOrderCode,
+        pt.productOrderPayDate,
+        p.productName,
+        p.productSalePrice,
+        poi.productOrderItemNumber,
+        poi.productOrderItemPrice,
+        pt.productOrderStatus
+        from productorder pt
+        left join productorderitem poi on poi.productOrderItemOrderId = pt.productOrderId
+        left join product p on poi.productOrderItemProductId = p.productId
+        <where>
+            p.productIsEnabled != 1
+            and pt.productOrderUserId = #{userId}
+            and pt.productOrderStatus = #{type}
+            <if test="productName != null">
+                and productName like concat('%', #{productName}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>

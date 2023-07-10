@@ -3,7 +3,7 @@ package com.lt.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lt.entity.ProductOrderItem;
 import com.lt.mapper.ProductOrderItemMapper;
-import com.lt.service.ProductorderitemService;
+import com.lt.service.ProductOrderItemService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
  * @createDate 2023-07-09 11:29:57
  */
 @Service
-public class ProductorderitemServiceImpl extends ServiceImpl<ProductOrderItemMapper, ProductOrderItem>
-        implements ProductorderitemService {
+public class ProductOrderItemServiceImpl extends ServiceImpl<ProductOrderItemMapper, ProductOrderItem>
+        implements ProductOrderItemService {
 
 }
 

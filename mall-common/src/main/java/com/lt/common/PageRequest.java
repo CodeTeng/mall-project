@@ -14,12 +14,12 @@ import lombok.Data;
 @Data
 @ApiModel("分页请求")
 public class PageRequest {
-    @ApiModelProperty("当前页号")
+    @ApiModelProperty(name = "current", value = "当前页号", required = true, dataType = "long")
     private long current = 1;
-    @ApiModelProperty("页面大小")
+    @ApiModelProperty(name = "pageSize", value = "页面大小", required = true, dataType = "long")
     private long pageSize = 10;
-    @ApiModelProperty("排序字段")
+    @ApiModelProperty(name = "sortField", value = "排序字段", required = false, dataType = "String")
     private String sortField;
-    @ApiModelProperty("排序规则 默认升序")
+    @ApiModelProperty(name = "sortOrder", value = "排序规则 默认升序", required = false, dataType = "String")
     private String sortOrder = CommonConstant.SORT_ORDER_ASC;
 }
