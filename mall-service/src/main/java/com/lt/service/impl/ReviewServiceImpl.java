@@ -1,5 +1,6 @@
 package com.lt.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lt.dto.review.ReviewProductDTO;
 import com.lt.entity.Review;
@@ -11,6 +12,7 @@ import com.lt.utils.UserThreadLocalUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -21,6 +23,8 @@ import java.util.Date;
 @Service
 public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review>
         implements ReviewService {
+    @Resource
+    private ReviewMapper reviewMapper;
 
     @Override
     public void reviewProduct(ReviewProductDTO reviewProductDTO) {
@@ -30,6 +34,13 @@ public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review>
         review.setReviewUserId(userId);
         review.setReviewCreatedate(new Date());
         this.save(review);
+    }
+
+    @Override
+    public Long getProductReviewCount(Integer productId) {
+        QueryWrapper<Review> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("reviewProductId", productId);
+        return reviewMapper.selectCount(queryWrapper);
     }
 }
 

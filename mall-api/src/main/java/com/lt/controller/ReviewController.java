@@ -7,12 +7,10 @@ import com.lt.dto.review.ReviewProductDTO;
 import com.lt.exception.BusinessException;
 import com.lt.service.ReviewService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -45,5 +43,15 @@ public class ReviewController {
         }
         reviewService.reviewProduct(reviewProductDTO);
         return ResultUtils.success(Boolean.TRUE);
+    }
+
+    @GetMapping("/getProductReviewCount")
+    @ApiOperation("获取商品评论总数")
+    public BaseResponse<Long> getProductReviewCount(@RequestParam(value = "productId") Integer productId) {
+        if (productId == null || productId <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "商品Id参数错误");
+        }
+        Long count = reviewService.getProductReviewCount(productId);
+        return ResultUtils.success(count);
     }
 }

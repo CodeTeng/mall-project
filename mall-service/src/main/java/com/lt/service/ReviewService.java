@@ -18,4 +18,12 @@ public interface ReviewService extends IService<Review> {
      * @param reviewProductDTO 评价商品DTO
      */
     void reviewProduct(ReviewProductDTO reviewProductDTO);
+
+    /**
+     * 获取商品评论总数
+     *
+     * @param productId 商品id
+     * @return 商品评论总数
+     */
+    Long getProductReviewCount(Integer productId);
 }

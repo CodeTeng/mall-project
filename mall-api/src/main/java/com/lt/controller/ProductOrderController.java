@@ -34,7 +34,7 @@ public class ProductOrderController {
     @GetMapping("/getMyAllOrder/{type}")
     @ApiOperation(value = "分页获取我的所有订单", notes = "type代表获取类型，-1获取所有,0待付款,1待发货,2待收货,3已完成")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "type", value = "订单的状态", dataType = "Integer", required = true, paramType = "path")
+            @ApiImplicitParam(name = "type", value = "订单的状态", required = true, paramType = "path")
     })
     public BaseResponse<Page<ProductOrderVO>> getMyAllOrder(@PathVariable("type") Integer type, ProductSearchDTO productSearchDTO) {
         // TODO 有BUG
