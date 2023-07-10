@@ -15,4 +15,11 @@
         propertyValueId,propertyValueValue,propertyValuePropertyId,
         propertyValueProductId
     </sql>
+
+    <select id="getProductParameter" resultType="com.lt.vo.ProductParameterVO">
+        select p.propertyName, pv.propertyValueValue
+        from propertyvalue pv
+                 left join property p on pv.propertyValuePropertyId = p.propertyId
+        where propertyValueProductId = #{productId}
+    </select>
 </mapper>

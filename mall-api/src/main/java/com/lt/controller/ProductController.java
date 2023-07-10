@@ -7,17 +7,21 @@ import com.lt.common.ResultUtils;
 import com.lt.dto.product.ProductSearchDTO;
 import com.lt.entity.Category;
 import com.lt.exception.BusinessException;
+import com.lt.mapper.PropertyValueMapper;
 import com.lt.service.CategoryService;
 import com.lt.service.ProductService;
 import com.lt.vo.HomeProductVO;
+import com.lt.vo.ProductParameterVO;
 import com.lt.vo.ProductSearchVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @description:
@@ -59,5 +63,15 @@ public class ProductController {
         }
         Page<ProductSearchVO> searchVOPage = productService.search(productSearchDTO);
         return ResultUtils.success(searchVOPage);
+    }
+
+    @GetMapping("/getProductParameter")
+    @ApiOperation("根据商品id获取商品参数")
+    public BaseResponse<List<ProductParameterVO>> getProductParameter(@RequestParam("productId") Integer productId) {
+        if (productId == null || productId <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        List<ProductParameterVO> productParameterVOList = productService.getProductParameter(productId);
+        return ResultUtils.success(productParameterVOList);
     }
 }

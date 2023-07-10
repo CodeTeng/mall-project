@@ -3,18 +3,18 @@ package com.lt.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lt.common.ErrorCode;
 import com.lt.constant.CommonConstant;
 import com.lt.dto.product.ProductSearchDTO;
 import com.lt.entity.Product;
 import com.lt.entity.ProductImage;
 import com.lt.entity.Review;
-import com.lt.mapper.ProductImageMapper;
-import com.lt.mapper.ProductMapper;
-import com.lt.mapper.ProductOrderMapper;
-import com.lt.mapper.ReviewMapper;
+import com.lt.exception.BusinessException;
+import com.lt.mapper.*;
 import com.lt.service.ProductService;
 import com.lt.vo.HomeProductVO;
 import com.lt.vo.ProductCategoryVO;
+import com.lt.vo.ProductParameterVO;
 import com.lt.vo.ProductSearchVO;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -44,6 +44,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
     private ReviewMapper reviewMapper;
     @Resource
     private ProductOrderMapper productOrderMapper;
+    @Resource
+    private PropertyValueMapper propertyValueMapper;
 
     @Override
     public HomeProductVO getHomeProductList(Integer categoryId) {
@@ -124,6 +126,12 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
         }).collect(Collectors.toList());
         productSearchVOPage.setRecords(searchVOList);
         return productSearchVOPage;
+    }
+
+    @Override
+    public List<ProductParameterVO> getProductParameter(Integer productId) {
+        // 获取产品参数
+        return propertyValueMapper.getProductParameter(productId);
     }
 }
 

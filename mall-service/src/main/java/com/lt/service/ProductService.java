@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lt.dto.product.ProductSearchDTO;
 import com.lt.entity.Product;
 import com.lt.vo.HomeProductVO;
+import com.lt.vo.ProductParameterVO;
 import com.lt.vo.ProductSearchVO;
 
 import java.util.List;
@@ -32,4 +33,12 @@ public interface ProductService extends IService<Product> {
      * @return 分页搜索商品VO
      */
     Page<ProductSearchVO> search(ProductSearchDTO productSearchDTO);
+
+    /**
+     * 根据商品id获取商品参数
+     *
+     * @param productId 商品id
+     * @return 商品参数VO
+     */
+    List<ProductParameterVO> getProductParameter(Integer productId);
 }
