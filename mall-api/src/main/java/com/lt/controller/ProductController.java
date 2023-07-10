@@ -6,6 +6,7 @@ import com.lt.common.ErrorCode;
 import com.lt.common.ResultUtils;
 import com.lt.dto.product.ProductSearchDTO;
 import com.lt.entity.Category;
+import com.lt.entity.Product;
 import com.lt.exception.BusinessException;
 import com.lt.mapper.PropertyValueMapper;
 import com.lt.service.CategoryService;
@@ -73,5 +74,18 @@ public class ProductController {
         }
         List<ProductParameterVO> productParameterVOList = productService.getProductParameter(productId);
         return ResultUtils.success(productParameterVOList);
+    }
+
+    @GetMapping("/getProductById")
+    @ApiOperation("根据商品id获取商品信息")
+    public BaseResponse<Product> getProductById(@RequestParam("productId") Integer productId) {
+        if (productId == null || productId <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Product product = productService.getById(productId);
+        if (product == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "该商品不存在");
+        }
+        return ResultUtils.success(product);
     }
 }
