@@ -9,7 +9,8 @@ import com.lt.entity.Product;
 import com.lt.exception.BusinessException;
 import com.lt.service.CategoryService;
 import com.lt.service.ProductService;
-import com.lt.vo.CategoryProductVO;
+import com.lt.vo.category.CategoryHomeVO;
+import com.lt.vo.category.CategoryProductVO;
 import com.lt.vo.category.CategoryVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -78,5 +79,12 @@ public class CategoryController {
             return categoryProductVO;
         }).collect(Collectors.toList());
         return ResultUtils.success(categoryProductVOList);
+    }
+
+    @GetMapping("/getHomeProduct")
+    @ApiOperation("获取主页分类下的所有商品")
+    public BaseResponse<List<CategoryHomeVO>> getHomeProductList() {
+        List<CategoryHomeVO> categoryHomeVOList = categoryService.getHomeProductList();
+        return ResultUtils.success(categoryHomeVOList);
     }
 }

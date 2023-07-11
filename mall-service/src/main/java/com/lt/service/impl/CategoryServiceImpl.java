@@ -7,7 +7,11 @@ import com.lt.mapper.CategoryMapper;
 
 import com.lt.service.CategoryService;
 
+import com.lt.vo.category.CategoryHomeVO;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author teng
@@ -17,7 +21,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         implements CategoryService {
+    @Resource
+    private CategoryMapper categoryMapper;
 
+    @Override
+    public List<CategoryHomeVO> getHomeProductList() {
+        return categoryMapper.getHomeProductList();
+    }
 }
 
 

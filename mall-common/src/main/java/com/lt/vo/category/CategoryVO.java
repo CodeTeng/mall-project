@@ -7,14 +7,14 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @description:
- * @author: ~Teng~
- * @date: 2023/7/11 15:55
- */
+* @description:
+* @author: ~Teng~
+* @date: 2023/7/11 15:55
+*/
+@ApiModel("分类商品VO")
 @Data
-@ApiModel("商品分类VO")
 public class CategoryVO implements Serializable {
-    @ApiModelProperty("分类的编号")
+    @ApiModelProperty("分类id")
     private Integer categoryId;
     @ApiModelProperty("分类名称")
     private String categoryName;

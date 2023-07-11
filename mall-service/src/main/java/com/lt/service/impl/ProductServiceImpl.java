@@ -3,30 +3,23 @@ package com.lt.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lt.common.ErrorCode;
 import com.lt.constant.CommonConstant;
 import com.lt.dto.product.ProductSearchDTO;
 import com.lt.entity.Category;
 import com.lt.entity.Product;
 import com.lt.entity.ProductImage;
 import com.lt.entity.Review;
-import com.lt.exception.BusinessException;
 import com.lt.mapper.*;
 import com.lt.service.ProductService;
-import com.lt.vo.HomeProductVO;
-import com.lt.vo.ProductCategoryVO;
 import com.lt.vo.ProductParameterVO;
 import com.lt.vo.ProductSearchVO;
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -49,38 +42,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
     private PropertyValueMapper propertyValueMapper;
     @Resource
     private CategoryMapper categoryMapper;
-
-    @Override
-    public HomeProductVO getHomeProductList(Integer categoryId) {
-        HomeProductVO homeProductVO = new HomeProductVO();
-        // 获取分类下的商品信息
-        List<ProductCategoryVO> productCategoryVOList = productMapper.getHomeProductList(categoryId);
-        if (CollectionUtils.isEmpty(productCategoryVOList)) {
-            // 该分类下无商品信息 直接返回
-            return homeProductVO;
-        }
-        Random random = new Random();
-        // 为每一个商品设置图片
-        for (ProductCategoryVO productCategoryVO : productCategoryVOList) {
-            Integer productId = productCategoryVO.getProductId();
-            QueryWrapper<ProductImage> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("productImageProductId", productId);
-            queryWrapper.eq("productImageType", 0);
-            // 查询该商品的所有图片
-            List<ProductImage> productImageList = productImageMapper.selectList(queryWrapper);
-            if (CollectionUtils.isEmpty(productImageList)) {
-                // 该商品没有图片 直接不显示
-                productCategoryVO.setProductImageSrc("#");
-                continue;
-            }
-            // 有图片 随机获取一张
-            int size = productImageList.size();
-            int index = random.nextInt(size);
-            productCategoryVO.setProductImageSrc(productImageList.get(index).getProductImageSrc());
-        }
-        homeProductVO.setProductCategoryVOList(productCategoryVOList);
-        return homeProductVO;
-    }
 
     @Override
     public Page<ProductSearchVO> search(ProductSearchDTO productSearchDTO) {

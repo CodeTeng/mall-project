@@ -21,13 +21,4 @@
         productCategoryId,productIsEnabled
     </sql>
 
-    <select id="getHomeProductList" resultType="com.lt.vo.ProductCategoryVO">
-        select p.productId, p.productName, p.productSalePrice
-        from product p
-                 left join category c on c.categoryId = p.productCategoryId
-        where p.productIsEnabled != 1
-          and p.productCategoryId = #{categoryId}
-        order by p.productCreateDate desc
-        limit 8;
-    </select>
 </mapper>

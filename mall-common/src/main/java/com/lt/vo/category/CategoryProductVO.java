@@ -1,4 +1,4 @@
-package com.lt.vo;
+package com.lt.vo.category;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
