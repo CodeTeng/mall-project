@@ -3,6 +3,9 @@ package com.lt.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lt.entity.Category;
+import com.lt.vo.category.CategoryHomeVO;
+
+import java.util.List;
 
 /**
  * @author teng
@@ -11,4 +14,8 @@ import com.lt.entity.Category;
  */
 public interface CategoryService extends IService<Category> {
 
+    /**
+     * 获取主页分类下的所有商品
+     */
+    List<CategoryHomeVO> getHomeProductList();
 }

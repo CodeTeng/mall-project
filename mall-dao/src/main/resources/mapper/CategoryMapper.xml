@@ -4,13 +4,57 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lt.mapper.CategoryMapper">
 
-    <resultMap id="BaseResultMap" type="com.lt.entity.Category">
-        <id property="categoryId" column="categoryId" jdbcType="INTEGER"/>
-        <result property="categoryName" column="categoryName" jdbcType="VARCHAR"/>
-        <result property="categoryImageSrc" column="categoryImageSrc" jdbcType="VARCHAR"/>
-    </resultMap>
-
     <sql id="Base_Column_List">
         categoryId,categoryName,categoryImageSrc
     </sql>
+
+    <!--查询8个分类的信息-->
+    <select id="getHomeProductList" resultMap="CategoryMap">
+        select categoryId, categoryName, categoryImageSrc
+        from category
+        limit 8
+    </select>
+
+    <!--封装的主页分类的集合-->
+    <resultMap id="CategoryMap" type="com.lt.vo.category.CategoryHomeVO">
+        <id column="categoryId" property="categoryId"/>
+        <result column="categoryName" property="categoryName"/>
+        <result column="categoryImageSrc" property="categoryImageSrc"/>
+        <!--一个分类对应多个商品-->
+        <collection property="categoryHomeProductVOList"
+                    ofType="com.lt.vo.category.CategoryHomeProductVO"
+                    select="getProducts"
+                    column="categoryId"/>
+    </resultMap>
+
+    <!--根据分类编号查询商品列表-->
+    <select id="getProducts" resultMap="productMap">
+        select productId, productName, productSalePrice
+        from product
+        where productCategoryId = #{categoryId}
+          and productIsEnabled != 1
+        order by productId desc
+        limit 8
+    </select>
+
+    <!--封裝分类下的商品信息的集合-->
+    <resultMap id="productMap" type="com.lt.vo.category.CategoryHomeProductVO">
+        <id property="productId" column="productId"/>
+        <result property="productName" column="productName"/>
+        <result property="productSalePrice" column="productSalePrice"/>
+        <!--一个商品可以对应多个可以放大的商品图片-->
+        <collection property="singleProductImageList"
+                    ofType="com.lt.entity.ProductImage"
+                    select="getImage"
+                    column="productId"/>
+    </resultMap>
+
+    <!--根据商品编号去查询图片-->
+    <select id="getImage" resultType="com.lt.entity.ProductImage">
+        select productImageId, productImageSrc
+        from productimage
+        where productImageProductId = #{productId}
+          and productImageType = 0
+        limit 1
+    </select>
 </mapper>
