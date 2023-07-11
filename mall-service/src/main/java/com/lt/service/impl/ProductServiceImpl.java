@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lt.common.ErrorCode;
 import com.lt.constant.CommonConstant;
 import com.lt.dto.product.ProductSearchDTO;
+import com.lt.entity.Category;
 import com.lt.entity.Product;
 import com.lt.entity.ProductImage;
 import com.lt.entity.Review;
@@ -46,6 +47,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
     private ProductOrderMapper productOrderMapper;
     @Resource
     private PropertyValueMapper propertyValueMapper;
+    @Resource
+    private CategoryMapper categoryMapper;
 
     @Override
     public HomeProductVO getHomeProductList(Integer categoryId) {
@@ -122,6 +125,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
             // 3.3 根据商品id查询该商品总成交个数
             Integer totalTransactionCount = productOrderMapper.getTotalTransactionCountByProductId(productId);
             productSearchVO.setTotalTransactionCount(totalTransactionCount);
+            // 3.4 根据商品id获取商品分类名称
+            Integer categoryId = productMapper.selectById(productId).getProductCategoryId();
+            Category category = categoryMapper.selectById(categoryId);
+            String categoryName = category.getCategoryName();
+            productSearchVO.setCategoryName(categoryName);
             return productSearchVO;
         }).collect(Collectors.toList());
         productSearchVOPage.setRecords(searchVOList);

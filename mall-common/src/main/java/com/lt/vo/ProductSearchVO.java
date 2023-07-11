@@ -20,6 +20,8 @@ public class ProductSearchVO implements Serializable {
     private Integer productId;
     @ApiModelProperty("商品名称")
     private String productName;
+    @ApiModelProperty("分类名称")
+    private String categoryName;
     @ApiModelProperty("商品卖价")
     private BigDecimal productSalePrice;
     @ApiModelProperty("商品主图")
