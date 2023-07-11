@@ -25,6 +25,8 @@ public class UserVO implements Serializable {
     private Integer userGender;
     @ApiModelProperty("出生日期")
     private Date userBirthday;
+    @ApiModelProperty("所在省份")
+    private String userProvince;
     @ApiModelProperty("所在城市")
     private String userAddress;
     @ApiModelProperty("所在城区")

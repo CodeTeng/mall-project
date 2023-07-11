@@ -8,7 +8,6 @@ import com.lt.dto.product.ProductSearchDTO;
 import com.lt.entity.Category;
 import com.lt.entity.Product;
 import com.lt.exception.BusinessException;
-import com.lt.mapper.PropertyValueMapper;
 import com.lt.service.CategoryService;
 import com.lt.service.ProductService;
 import com.lt.vo.HomeProductVO;

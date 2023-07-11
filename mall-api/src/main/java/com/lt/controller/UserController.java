@@ -6,8 +6,10 @@ import com.lt.common.ResultUtils;
 import com.lt.dto.user.UpdateUserDTO;
 import com.lt.dto.user.UserLoginDTO;
 import com.lt.dto.user.UserRegisterDTO;
+import com.lt.entity.Address;
 import com.lt.entity.User;
 import com.lt.exception.BusinessException;
+import com.lt.service.AddressService;
 import com.lt.service.UserService;
 import com.lt.utils.UserThreadLocalUtil;
 import com.lt.vo.UserVO;
@@ -35,6 +37,8 @@ import java.util.Date;
 public class UserController {
     @Resource
     private UserService userService;
+    @Resource
+    private AddressService addressService;
 
     @ApiOperation("用户注册")
     @PostMapping("/register")
@@ -97,6 +101,10 @@ public class UserController {
         }
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
+        String userAddress = user.getUserAddress();
+        Address address = addressService.getById(userAddress);
+        String userProvince = address.getAddressRegionId();
+        userVO.setUserProvince(userProvince);
         return ResultUtils.success(userVO);
     }
 
