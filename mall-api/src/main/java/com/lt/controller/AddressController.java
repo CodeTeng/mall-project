@@ -30,9 +30,16 @@ public class AddressController {
     @Resource
     private AddressService addressService;
 
+    @GetMapping("/getProvince")
+    @ApiOperation("获取省份或直辖市")
+    public BaseResponse<List<AddressVO>> getProvince() {
+        List<AddressVO> addressVOList = addressService.getProvince();
+        return ResultUtils.success(addressVOList);
+    }
+
     @GetMapping("/getAddress")
-    @ApiOperation("获取对应地址名称")
-    public BaseResponse<List<AddressVO>> getAddressRegion(String addressAreaId) {
+    @ApiOperation("根据id查询城市或城区")
+    public BaseResponse<List<AddressVO>> getAddressRegion(@RequestParam("addressAreaId") String addressAreaId) {
         if (StringUtils.isBlank(addressAreaId)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }

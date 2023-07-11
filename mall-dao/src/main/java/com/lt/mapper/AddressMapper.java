@@ -3,7 +3,10 @@ package com.lt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lt.entity.Address;
+import com.lt.vo.AddressVO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author teng
@@ -13,7 +16,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AddressMapper extends BaseMapper<Address> {
-
+    /**
+     * 获取省份或直辖市
+     *
+     * @return 对应省份或直辖市
+     */
+    List<AddressVO> getProvince();
 }
 
 

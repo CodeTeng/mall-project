@@ -41,6 +41,11 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address>
             return addressVO;
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public List<AddressVO> getProvince() {
+        return addressMapper.getProvince();
+    }
 }
 
 

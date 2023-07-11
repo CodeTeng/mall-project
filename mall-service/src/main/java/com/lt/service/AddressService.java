@@ -15,10 +15,17 @@ import java.util.List;
 public interface AddressService extends IService<Address> {
 
     /**
-     * 获取对应地址名称
+     * 获取对应城市或城区名称
      *
      * @param addressAreaId 地址id
      * @return 对应下级地址名称
      */
     List<AddressVO> getAddressRegion(String addressAreaId);
+
+    /**
+     * 获取省份或直辖市
+     *
+     * @return 对应省份或直辖市
+     */
+    List<AddressVO> getProvince();
 }

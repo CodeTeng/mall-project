@@ -13,4 +13,10 @@
     <sql id="Base_Column_List">
         addressAreaId,addressName,addressRegionId
     </sql>
+
+    <select id="getProvince" resultType="com.lt.vo.AddressVO">
+        select addressAreaId, addressName
+        from address
+        where addressAreaId = addressRegionId
+    </select>
 </mapper>
