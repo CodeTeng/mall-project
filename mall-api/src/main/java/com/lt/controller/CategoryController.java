@@ -11,7 +11,6 @@ import com.lt.service.CategoryService;
 import com.lt.service.ProductService;
 import com.lt.vo.CategoryProductVO;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
