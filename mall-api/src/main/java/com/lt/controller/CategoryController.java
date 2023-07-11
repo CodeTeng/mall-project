@@ -10,6 +10,7 @@ import com.lt.exception.BusinessException;
 import com.lt.service.CategoryService;
 import com.lt.service.ProductService;
 import com.lt.vo.CategoryProductVO;
+import com.lt.vo.category.CategoryVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
@@ -38,9 +39,27 @@ public class CategoryController {
     private ProductService productService;
 
     @GetMapping("/list")
-    @ApiOperation("获取所有的分类信息")
-    public BaseResponse<List<Category>> list() {
-        return ResultUtils.success(categoryService.list());
+    @ApiOperation(value = "获取商品的分类信息", notes = "type:1 查询上方分类 type:2查询侧边分类")
+    public BaseResponse<List<CategoryVO>> list(@RequestParam("type") Integer type) {
+        if (type == null || (type != 1 && type != 2)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        List<Category> categoryList = categoryService.list();
+        List<CategoryVO> categoryVOList = categoryList.stream().map(category -> {
+            CategoryVO categoryVO = new CategoryVO();
+            BeanUtils.copyProperties(category, categoryVO);
+            return categoryVO;
+        }).collect(Collectors.toList());
+        if (type == 1) {
+            categoryVOList = categoryVOList.stream().limit(8).collect(Collectors.toList());
+            categoryVOList.forEach(categoryVO -> {
+                String categoryName = categoryVO.getCategoryName();
+                String prefixCategoryName = categoryName.split("/")[0];
+                categoryVO.setCategoryName(prefixCategoryName);
+            });
+            return ResultUtils.success(categoryVOList);
+        }
+        return ResultUtils.success(categoryVOList);
     }
 
     @GetMapping("/productListById")

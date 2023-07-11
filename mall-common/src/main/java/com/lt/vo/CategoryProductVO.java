@@ -14,6 +14,8 @@ import java.io.Serializable;
 @Data
 @ApiModel("分类商品VO")
 public class CategoryProductVO implements Serializable {
+    @ApiModelProperty("商品编号")
+    private Integer productId;
     @ApiModelProperty("商品概述")
     private String productTitle;
     @ApiModelProperty("商品的状态（0：销售中，1：停售中，2：促销中）")
