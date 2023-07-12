@@ -13,10 +13,7 @@ import com.lt.vo.ProductSearchVO;
 import com.lt.vo.product.DetailedProductVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -46,9 +43,9 @@ public class ProductController {
         return ResultUtils.success(searchVOPage);
     }
 
-    @GetMapping("/getDetailedProduct")
+    @GetMapping("/getDetailedProduct/{productId}")
     @ApiOperation("根据商品id获取详细商品信息")
-    public BaseResponse<DetailedProductVO> getDetailedProduct(@RequestParam("productId") Integer productId) {
+    public BaseResponse<DetailedProductVO> getDetailedProduct(@PathVariable("productId") Integer productId) {
         if (productId == null || productId <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
