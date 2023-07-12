@@ -21,4 +21,60 @@
         productCategoryId,productIsEnabled
     </sql>
 
+    <!--根据商品id获取商品详细信息-->
+    <select id="getDetailedProduct" resultMap="getDetailedProduct">
+        select productId, productName, productPrice, productSalePrice
+        from product
+        where productId = #{productId}
+          and productIsEnabled != 1
+    </select>
+
+    <!--封装商品详细信息-->
+    <resultMap id="getDetailedProduct" type="com.lt.vo.product.DetailedProductVO">
+        <id property="productId" column="productId"/>
+        <result property="productName" column="productName" />
+        <result property="productPrice" column="productPrice" />
+        <result property="productSalePrice" column="productSalePrice" />
+        <!--一个商品对应多张图片放大图-->
+        <collection property="singleProductImageList"
+                    ofType="com.lt.entity.ProductImage"
+                    column="productId"
+                    select="getSingleImage"/>
+        <!--一个商品对应多张不可放大图-->
+        <collection property="detailProductImageList"
+                    ofType="com.lt.entity.ProductImage"
+                    column="productId"
+                    select="getDetailImage"/>
+        <!--一个商品对应多个商品参数-->
+        <collection property="productParameterList"
+                    ofType="com.lt.vo.product.ProductParameter"
+                    column="productId"
+                    select="getProductParameter"/>
+    </resultMap>
+
+    <!--获取可放大图片-->
+    <select id="getSingleImage" resultType="com.lt.entity.ProductImage">
+        select productImageSrc
+        from productimage
+        where productImageProductId = #{productId}
+          and productImageType = 0
+        limit 5
+    </select>
+
+    <!--获取不可放大图片-->
+    <select id="getDetailImage" resultType="com.lt.entity.ProductImage">
+        select productImageSrc
+        from productimage
+        where productImageProductId = #{productId}
+          and productImageType = 1
+    </select>
+
+    <!--获取对应的商品参数-->
+    <select id="getProductParameter" resultType="com.lt.vo.product.ProductParameter">
+        select p.propertyName, pv.propertyValueValue
+        from propertyvalue pv
+                 left join property p on pv.propertyValuePropertyId = p.propertyId
+        where propertyValueProductId = #{productId}
+        order by p.propertyId
+    </select>
 </mapper>

@@ -10,5 +10,11 @@ import com.lt.entity.ProductOrderItem;
  * @createDate 2023-07-09 11:29:57
  */
 public interface ProductOrderItemService extends IService<ProductOrderItem> {
-
+    /**
+     * 获取商品总销量数
+     *
+     * @param productId 商品id
+     * @return 总销量数
+     */
+    Integer getTotalSales(Integer productId);
 }

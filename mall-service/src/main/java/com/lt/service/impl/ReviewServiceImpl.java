@@ -52,10 +52,10 @@ public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review>
     }
 
     @Override
-    public Long getProductReviewCount(Integer productId) {
+    public Integer getProductReviewCount(Integer productId) {
         QueryWrapper<Review> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("reviewProductId", productId);
-        return reviewMapper.selectCount(queryWrapper);
+        return Math.toIntExact(reviewMapper.selectCount(queryWrapper));
     }
 
     @Override

@@ -1,10 +1,14 @@
 package com.lt.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lt.entity.ProductOrderItem;
 import com.lt.mapper.ProductOrderItemMapper;
 import com.lt.service.ProductOrderItemService;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author teng
@@ -14,7 +18,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductOrderItemServiceImpl extends ServiceImpl<ProductOrderItemMapper, ProductOrderItem>
         implements ProductOrderItemService {
+    @Resource
+    private ProductOrderItemMapper productOrderItemMapper;
 
+    @Override
+    public Integer getTotalSales(Integer productId) {
+        QueryWrapper<ProductOrderItem> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(productId != null && productId > 0, "productOrderItemProductId", productId);
+        queryWrapper.select("productOrderItemNumber");
+        List<ProductOrderItem> productOrderItemList = productOrderItemMapper.selectList(queryWrapper);
+        return productOrderItemList.stream()
+                .map(ProductOrderItem::getProductOrderItemNumber)
+                .reduce(Integer::sum).orElse(0);
+    }
 }
 
 

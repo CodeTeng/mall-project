@@ -101,7 +101,7 @@ public class CategoryController {
     }
 
     @GetMapping("/getHomeProduct")
-    @ApiOperation("获取主页分类下的所有商品")
+    @ApiOperation("获取主页分类下的所有商品信息")
     public BaseResponse<List<CategoryHomeVO>> getHomeProductList() {
         List<CategoryHomeVO> categoryHomeVOList = categoryService.getHomeProductList();
         return ResultUtils.success(categoryHomeVOList);

@@ -1,4 +1,4 @@
-package com.lt.vo;
+package com.lt.vo.product;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel("商品参数VO")
-public class ProductParameterVO implements Serializable {
+public class ProductParameter implements Serializable {
     @ApiModelProperty("属性名称")
     private String propertyName;
     @ApiModelProperty("商品属性值")

@@ -47,16 +47,6 @@ public class ReviewController {
         return ResultUtils.success(Boolean.TRUE);
     }
 
-    @GetMapping("/getProductReviewCount")
-    @ApiOperation("获取商品评论总数")
-    public BaseResponse<Long> getProductReviewCount(@RequestParam(value = "productId") Integer productId) {
-        if (productId == null || productId <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "商品Id参数错误");
-        }
-        Long count = reviewService.getProductReviewCount(productId);
-        return ResultUtils.success(count);
-    }
-
     @GetMapping("/getPageReviewByProductId")
     @ApiOperation("根据商品id分页获取评论数据")
     public BaseResponse<Page<ReviewVO>> getPageReviewByProductId(GetProductReviewDTO getProductReviewDTO) {

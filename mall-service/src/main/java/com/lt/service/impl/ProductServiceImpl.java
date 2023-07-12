@@ -11,8 +11,9 @@ import com.lt.entity.ProductImage;
 import com.lt.entity.Review;
 import com.lt.mapper.*;
 import com.lt.service.ProductService;
-import com.lt.vo.ProductParameterVO;
+import com.lt.vo.product.ProductParameter;
 import com.lt.vo.ProductSearchVO;
+import com.lt.vo.product.DetailedProductVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -98,9 +99,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
     }
 
     @Override
-    public List<ProductParameterVO> getProductParameter(Integer productId) {
-        // 获取产品参数
-        return propertyValueMapper.getProductParameter(productId);
+    public DetailedProductVO getDetailedProduct(Integer productId) {
+        return productMapper.getDetailedProduct(productId);
     }
 }
 

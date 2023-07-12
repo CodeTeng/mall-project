@@ -27,7 +27,7 @@ public interface ReviewService extends IService<Review> {
      * @param productId 商品id
      * @return 商品评论总数
      */
-    Long getProductReviewCount(Integer productId);
+    Integer getProductReviewCount(Integer productId);
 
     /**
      * 根据商品id分页获取评论数据

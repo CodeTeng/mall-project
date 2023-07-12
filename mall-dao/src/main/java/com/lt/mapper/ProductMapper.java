@@ -3,6 +3,8 @@ package com.lt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lt.entity.Product;
+import com.lt.vo.product.DetailedProductVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,6 +15,13 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProductMapper extends BaseMapper<Product> {
+    /**
+     * 获取商品详细信息
+     *
+     * @param productId 商品id
+     * @return 商品详细信息
+     */
+    DetailedProductVO getDetailedProduct(@Param("productId") Integer productId);
 }
 
 
