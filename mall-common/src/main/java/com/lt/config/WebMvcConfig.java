@@ -20,7 +20,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private List<String> urls = Arrays.asList(
             "/**/login", "/**/register", "/swagger-ui.html",
             "/swagger-resources/**", "/webjars/**", "/doc.html/**",
-            "/v2/**", "/product/getHomeProduct", "/address/**", "/category/**"
+            "/v2/**", "/product/getHomeProduct", "/address/**", "/category/**",
+            "/product/**"
     );
 
     @Override
