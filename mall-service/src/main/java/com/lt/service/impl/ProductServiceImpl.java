@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lt.constant.CommonConstant;
+import com.lt.dto.product.ProductCategoryDTO;
 import com.lt.dto.product.ProductSearchDTO;
 import com.lt.entity.Category;
 import com.lt.entity.Product;
@@ -40,8 +41,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
     @Resource
     private ProductOrderMapper productOrderMapper;
     @Resource
-    private PropertyValueMapper propertyValueMapper;
-    @Resource
     private CategoryMapper categoryMapper;
 
     @Override
@@ -56,7 +55,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
         productQueryWrapper.ne("productIsEnabled", 1);
         productQueryWrapper.like(StringUtils.isNotBlank(productName), "productName", productName);
         productQueryWrapper.select("productId", "productName", "productSalePrice", "productTitle");
-        productQueryWrapper.orderBy(StringUtils.isNotBlank(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_DESC), sortField);
+        productQueryWrapper.orderBy(StringUtils.isNotBlank(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
         // 2. 分页查询
         Page<Product> productPage = productMapper.selectPage(new Page<>(current, pageSize), productQueryWrapper);
         List<Product> productList = productPage.getRecords();
@@ -77,7 +76,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
             productImageQueryWrapper.last("limit 5");
             // 3.1 查询每个商品的多张商品图片
             List<ProductImage> productImageList = productImageMapper.selectList(productImageQueryWrapper);
-            productSearchVO.setProductPlanSrc(productImageList.get(0).getProductImageSrc());
             List<String> productImageSrcList = productImageList.stream()
                     .map(ProductImage::getProductImageSrc).collect(Collectors.toList());
             productSearchVO.setProductImageSrcList(productImageSrcList);
@@ -101,6 +99,19 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
     @Override
     public DetailedProductVO getDetailedProduct(Integer productId) {
         return productMapper.getDetailedProduct(productId);
+    }
+
+    @Override
+    public Page<ProductSearchVO> getProductByCategoryId(ProductCategoryDTO productCategoryDTO) {
+        Integer categoryId = productCategoryDTO.getCategoryId();
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("productCategoryId", categoryId);
+        queryWrapper.ne("productIsEnabled", 1);
+        Page<Product> productPage = productMapper.selectPage(new Page<>(productCategoryDTO.getCurrent(), productCategoryDTO.getPageSize()), queryWrapper);
+        Page<ProductSearchVO> productSearchVOPage = new Page<>(productPage.getCurrent(), productPage.getSize(), productPage.getTotal());
+        List<ProductSearchVO> productSearchVOList = productMapper.getProductByCategoryId(categoryId);
+        productSearchVOPage.setRecords(productSearchVOList);
+        return productSearchVOPage;
     }
 }
 

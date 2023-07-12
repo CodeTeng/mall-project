@@ -3,6 +3,7 @@ package com.lt.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lt.dto.product.ProductCategoryDTO;
 import com.lt.dto.product.ProductSearchDTO;
 import com.lt.entity.Product;
 import com.lt.vo.product.ProductParameter;
@@ -32,4 +33,12 @@ public interface ProductService extends IService<Product> {
      * @return 商品详细信息
      */
     DetailedProductVO getDetailedProduct(Integer productId);
+
+    /**
+     * 根据分类id分页查询商品信息
+     *
+     * @param productCategoryDTO 查询DTO
+     * @return 商品信息
+     */
+    Page<ProductSearchVO> getProductByCategoryId(ProductCategoryDTO productCategoryDTO);
 }

@@ -1,6 +1,5 @@
 package com.lt.vo.category;
 
-import com.lt.entity.ProductImage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,6 +23,6 @@ public class CategoryHomeProductVO implements Serializable {
     @ApiModelProperty("商品卖价")
     private BigDecimal productSalePrice;
     @ApiModelProperty("可放大的图片地址")
-    private List<ProductImage> singleProductImageList;
+    private List<String> singleProductImageList;
 }
 

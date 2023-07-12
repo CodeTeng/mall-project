@@ -32,17 +32,17 @@
     <!--封装商品详细信息-->
     <resultMap id="getDetailedProduct" type="com.lt.vo.product.DetailedProductVO">
         <id property="productId" column="productId"/>
-        <result property="productName" column="productName" />
-        <result property="productPrice" column="productPrice" />
-        <result property="productSalePrice" column="productSalePrice" />
+        <result property="productName" column="productName"/>
+        <result property="productPrice" column="productPrice"/>
+        <result property="productSalePrice" column="productSalePrice"/>
         <!--一个商品对应多张图片放大图-->
         <collection property="singleProductImageList"
-                    ofType="com.lt.entity.ProductImage"
+                    ofType="string"
                     column="productId"
                     select="getSingleImage"/>
         <!--一个商品对应多张不可放大图-->
         <collection property="detailProductImageList"
-                    ofType="com.lt.entity.ProductImage"
+                    ofType="string"
                     column="productId"
                     select="getDetailImage"/>
         <!--一个商品对应多个商品参数-->
@@ -53,7 +53,7 @@
     </resultMap>
 
     <!--获取可放大图片-->
-    <select id="getSingleImage" resultType="com.lt.entity.ProductImage">
+    <select id="getSingleImage" resultType="string">
         select productImageSrc
         from productimage
         where productImageProductId = #{productId}
@@ -62,7 +62,7 @@
     </select>
 
     <!--获取不可放大图片-->
-    <select id="getDetailImage" resultType="com.lt.entity.ProductImage">
+    <select id="getDetailImage" resultType="string">
         select productImageSrc
         from productimage
         where productImageProductId = #{productId}
@@ -76,5 +76,50 @@
                  left join property p on pv.propertyValuePropertyId = p.propertyId
         where propertyValueProductId = #{productId}
         order by p.propertyId
+    </select>
+
+    <!--根据分类id获取商品信息-->
+    <select id="getProductByCategoryId" resultMap="getProductByCategoryId">
+        select productId, productName, productSalePrice, categoryName
+        from product
+                 inner join category c on c.categoryId = product.productCategoryId
+        where categoryId = #{categoryId}
+          and productIsEnabled != 1
+    </select>
+
+    <!--封装商品信息数据-->
+    <resultMap id="getProductByCategoryId" type="com.lt.vo.ProductSearchVO">
+        <id property="productId" column="productId" />
+        <result property="productName" column="productName" />
+        <result property="categoryName" column="categoryName" />
+        <result property="productSalePrice" column="productSalePrice"/>
+        <!--获取对应的可放大图片-->
+        <collection property="productImageSrcList"
+                    ofType="string"
+                    column="productId"
+                    select="getSingleImage" />
+        <!--获取对应的评论个数-->
+        <collection property="reviewCount"
+                     select="getReviewCount"
+                     javaType="integer"
+                     column="productId" />
+        <!--获取对应的总销量数-->
+        <collection property="totalTransactionCount"
+                     select="getTotalTransactionCount"
+                     javaType="integer"
+                     column="productId" />
+    </resultMap>
+
+    <!--获取对应的评论个数-->
+    <select id="getReviewCount" resultType="integer">
+        select count(*)
+        from review
+        where reviewProductId = #{productId}
+    </select>
+
+    <select id="getTotalTransactionCount" resultType="integer">
+        select sum(productOrderItemNumber)
+        from productorderitem
+        where productOrderItemProductId = #{productId}
     </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.lt.vo;
 
+import com.lt.entity.ProductImage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,8 +25,6 @@ public class ProductSearchVO implements Serializable {
     private String categoryName;
     @ApiModelProperty("商品卖价")
     private BigDecimal productSalePrice;
-    @ApiModelProperty("商品主图")
-    private String productPlanSrc;
     @ApiModelProperty("多个商品图片")
     private List<String> productImageSrcList;
     @ApiModelProperty("评论个数")

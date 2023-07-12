@@ -44,14 +44,14 @@
         <result property="productSalePrice" column="productSalePrice"/>
         <!--一个商品可以对应多个可以放大的商品图片-->
         <collection property="singleProductImageList"
-                    ofType="com.lt.entity.ProductImage"
+                    ofType="string"
                     select="getImage"
                     column="productId"/>
     </resultMap>
 
     <!--根据商品编号去查询图片-->
-    <select id="getImage" resultType="com.lt.entity.ProductImage">
-        select productImageId, productImageSrc
+    <select id="getImage" resultType="string">
+        select productImageSrc
         from productimage
         where productImageProductId = #{productId}
           and productImageType = 0

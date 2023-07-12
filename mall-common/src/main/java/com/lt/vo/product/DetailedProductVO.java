@@ -30,9 +30,9 @@ public class DetailedProductVO implements Serializable {
     @ApiModelProperty("评论个数")
     private Integer reviewCount;
     @ApiModelProperty("商品放大图片地址")
-    private List<ProductImage> singleProductImageList;
+    private List<String> singleProductImageList;
     @ApiModelProperty("商品不可放大图片地址")
-    private List<ProductImage> detailProductImageList;
+    private List<String> detailProductImageList;
     @ApiModelProperty("商品参数")
     private List<ProductParameter> productParameterList;
 }

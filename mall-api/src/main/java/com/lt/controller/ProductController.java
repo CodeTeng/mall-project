@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lt.common.BaseResponse;
 import com.lt.common.ErrorCode;
 import com.lt.common.ResultUtils;
+import com.lt.dto.product.ProductCategoryDTO;
 import com.lt.dto.product.ProductSearchDTO;
 import com.lt.exception.BusinessException;
 import com.lt.service.ProductOrderItemService;
@@ -34,7 +35,7 @@ public class ProductController {
     private ProductOrderItemService productOrderItemService;
 
     @GetMapping("/search")
-    @ApiOperation(value = "主页商品分页搜索", notes = "根据商品名称模糊搜索，可根据价格和时间排序")
+    @ApiOperation(value = "商品分页搜索", notes = "根据商品名称模糊搜索，可根据价格和时间排序")
     public BaseResponse<Page<ProductSearchVO>> search(ProductSearchDTO productSearchDTO) {
         if (productSearchDTO == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -55,5 +56,15 @@ public class ProductController {
         detailedProductVO.setTotalSales(totalSales);
         detailedProductVO.setReviewCount(reviewCount);
         return ResultUtils.success(detailedProductVO);
+    }
+
+    @GetMapping("/getProductByCategoryId")
+    @ApiOperation(value = "根据分类id分页查询商品信息", notes = "只能分页查询,不能进行排序")
+    public BaseResponse<Page<ProductSearchVO>> getProductByCategoryId(ProductCategoryDTO productCategoryDTO) {
+        if (productCategoryDTO == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Page<ProductSearchVO> productSearchVOPage = productService.getProductByCategoryId(productCategoryDTO);
+        return ResultUtils.success(productSearchVOPage);
     }
 }
