@@ -2,9 +2,8 @@ package com.lt.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lt.dto.product.ProductSearchDTO;
 import com.lt.entity.ProductOrder;
-import com.lt.vo.ProductOrderVO;
+import com.lt.vo.order.ProductOrderVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +17,6 @@ import java.util.List;
  */
 @Repository
 public interface ProductOrderMapper extends BaseMapper<ProductOrder> {
-
     /**
      * 根据商品id查询该商品总成交个数
      *
@@ -28,23 +26,13 @@ public interface ProductOrderMapper extends BaseMapper<ProductOrder> {
     Integer getTotalTransactionCountByProductId(@Param("productId") Integer productId);
 
     /**
-     * 搜索所有订单
+     * 获取当前用户订单数据
      *
-     * @param userId      用户id
-     * @param productName 商品名称
-     * @return 订单数据VO
+     * @param status 状态
+     * @param userId 当前用户id
+     * @return 订单数据
      */
-    List<ProductOrderVO> getMyAllOrder(@Param("userId") Integer userId, @Param("productName") String productName);
-
-    /**
-     * 指定订单
-     *
-     * @param userId      用户id
-     * @param type        订单类型
-     * @param productName 商品名称
-     * @return 订单数据VO
-     */
-    List<ProductOrderVO> getMyAllOrderByType(@Param("userId") Integer userId, @Param("productName") String productName, @Param("type") Integer type);
+    List<ProductOrderVO> getMyAllOrder(@Param("status") Integer status, @Param("userId") Integer userId);
 }
 
 

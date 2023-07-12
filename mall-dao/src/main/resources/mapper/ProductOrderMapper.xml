@@ -27,55 +27,55 @@
     </sql>
 
     <select id="getTotalTransactionCountByProductId" resultType="java.lang.Integer">
-        select count(*)
-        from productorder pt
-                 left join productorderitem poi on pt.productOrderId = poi.productOrderItemOrderId
-        where pt.productOrderStatus = 3
-          and poi.productOrderItemProductId = #{productId};
+        select sum(productOrderItemNumber)
+        from productorderitem
+        where productOrderItemProductId = #{productId}
     </select>
 
-    <select id="getMyAllOrder" resultType="com.lt.vo.ProductOrderVO">
-        select p.productId,
-        pt.productOrderId,
-        pt.productOrderCode,
-        pt.productOrderPayDate,
-        p.productName,
-        p.productSalePrice,
-        poi.productOrderItemNumber,
-        poi.productOrderItemPrice,
-        pt.productOrderStatus
-        from productorder pt
-        left join productorderitem poi on poi.productOrderItemOrderId = pt.productOrderId
-        left join product p on poi.productOrderItemProductId = p.productId
-        <where>
-            p.productIsEnabled != 1
-            and pt.productOrderUserId = #{userId}
-            <if test="productName != null">
-                and productName like concat('%', #{productName}, '%')
-            </if>
-        </where>
+    <!--获取当前用户订单-->
+    <select id="getMyAllOrder" resultMap="getMyAllOrder">
+        select productId,
+        productOrderId,
+        productOrderItemId,
+        productOrderCode,
+        productOrderPayDate,
+        productName,
+        productOrderItemNumber,
+        productSalePrice,
+        productOrderItemPrice,
+        (select productImageSrc
+        from productimage
+        where productImageProductId = productId
+        and productImageType = 0
+        limit 1) as productImageSrc
+        from productorder
+        inner join productorderitem on productOrderItemOrderId = productOrderId
+        inner join product on productId = productOrderItemProductId
+        where productOrderUserId = #{userId}
+        <if test="status != null">
+            and productOrderStatus = #{status}
+        </if>
+        order by productOrderId desc
     </select>
 
-    <select id="getMyAllOrderByType" resultType="com.lt.vo.ProductOrderVO">
-        select p.productId,
-        pt.productOrderId,
-        pt.productOrderCode,
-        pt.productOrderPayDate,
-        p.productName,
-        p.productSalePrice,
-        poi.productOrderItemNumber,
-        poi.productOrderItemPrice,
-        pt.productOrderStatus
-        from productorder pt
-        left join productorderitem poi on poi.productOrderItemOrderId = pt.productOrderId
-        left join product p on poi.productOrderItemProductId = p.productId
-        <where>
-            p.productIsEnabled != 1
-            and pt.productOrderUserId = #{userId}
-            and pt.productOrderStatus = #{type}
-            <if test="productName != null">
-                and productName like concat('%', #{productName}, '%')
-            </if>
-        </where>
-    </select>
+    <!--封装订单数据-->
+    <resultMap id="getMyAllOrder" type="com.lt.vo.order.ProductOrderVO">
+        <id property="productOrderId" column="productOrderId"/>
+        <result property="productOrderCode" column="productOrderCode"/>
+        <result property="productOrderPayDate" column="productOrderPayDate"/>
+        <!--一个订单可以有多个订单项-->
+        <collection property="productOrderIItemList"
+                    ofType="com.lt.vo.order.ProductOrderItemVO">
+            <id property="productOrderItemId" column="productOrderItemId"/>
+            <result property="productOrderItemPrice" column="productOrderItemPrice"/>
+            <result property="productOrderItemNumber" column="productOrderItemNumber"/>
+            <!--一个订单项对应一种商品-->
+            <association property="productOrderItemProductVO" javaType="com.lt.vo.order.ProductOrderItemProductVO">
+                <id property="productId" column="productId"/>
+                <result property="productName" column="productName"/>
+                <result property="productSalePrice" column="productSalePrice"/>
+                <result property="productImageSrc" column="productImageSrc"/>
+            </association>
+        </collection>
+    </resultMap>
 </mapper>

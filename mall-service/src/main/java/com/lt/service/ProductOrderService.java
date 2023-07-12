@@ -3,9 +3,9 @@ package com.lt.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lt.dto.product.ProductSearchDTO;
+import com.lt.common.PageRequest;
 import com.lt.entity.ProductOrder;
-import com.lt.vo.ProductOrderVO;
+import com.lt.vo.order.ProductOrderVO;
 
 /**
  * @author teng
@@ -17,9 +17,9 @@ public interface ProductOrderService extends IService<ProductOrder> {
     /**
      * 获取我的所有订单
      *
-     * @param productSearchDTO 搜索DTO
-     * @param type             获取类型(-1 获取所有)
+     * @param pageRequest 分页参数
+     * @param status      获取类型
      * @return 所有订单信息
      */
-    Page<ProductOrderVO> getMyAllOrder(ProductSearchDTO productSearchDTO, Integer type);
+    Page<ProductOrderVO> getMyAllOrder(PageRequest pageRequest, Integer status);
 }
