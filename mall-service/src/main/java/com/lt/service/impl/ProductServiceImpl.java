@@ -22,6 +22,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -84,7 +85,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
             productSearchVO.setReviewCount(Math.toIntExact(reviewCount));
             // 3.3 根据商品id查询该商品总成交个数
             Integer totalTransactionCount = productOrderMapper.getTotalTransactionCountByProductId(productId);
-            productSearchVO.setTotalTransactionCount(totalTransactionCount);
+            productSearchVO.setTotalTransactionCount(Optional.ofNullable(totalTransactionCount).orElse(0));
             // 3.4 根据商品id获取商品分类名称
             Integer categoryId = productMapper.selectById(productId).getProductCategoryId();
             Category category = categoryMapper.selectById(categoryId);
