@@ -5,6 +5,7 @@ import com.lt.common.BaseResponse;
 import com.lt.common.ErrorCode;
 import com.lt.common.PageRequest;
 import com.lt.common.ResultUtils;
+import com.lt.dto.order.UpdateOrderDTO;
 import com.lt.exception.BusinessException;
 import com.lt.service.ProductOrderService;
 import com.lt.vo.order.ProductOrderVO;
@@ -34,5 +35,23 @@ public class ProductOrderController {
         }
         Page<ProductOrderVO> productOrderVOPage = productOrderService.getMyAllOrder(pageRequest, status);
         return ResultUtils.success(productOrderVOPage);
+    }
+
+    @PostMapping("/updateOrderStatus")
+    @ApiOperation("修改订单状态")
+    public BaseResponse<Boolean> updateOrderStatus(@RequestBody UpdateOrderDTO updateOrderDTO) {
+        if (updateOrderDTO == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Integer productOrderId = updateOrderDTO.getProductOrderId();
+        Integer productOrderStatus = updateOrderDTO.getProductOrderStatus();
+        if (productOrderId == null || productOrderStatus == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        if (productOrderStatus != 0 && productOrderStatus != 1 && productOrderStatus != 2 && productOrderStatus != 3 && productOrderStatus != 4) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        productOrderService.updateOrderStatus(productOrderId, productOrderStatus);
+        return ResultUtils.success(Boolean.TRUE);
     }
 }

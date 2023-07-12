@@ -39,6 +39,7 @@
         productOrderItemId,
         productOrderCode,
         productOrderPayDate,
+        productOrderStatus,
         productName,
         productOrderItemNumber,
         productSalePrice,
@@ -63,6 +64,7 @@
         <id property="productOrderId" column="productOrderId"/>
         <result property="productOrderCode" column="productOrderCode"/>
         <result property="productOrderPayDate" column="productOrderPayDate"/>
+        <result property="productOrderStatus" column="productOrderStatus"/>
         <!--一个订单可以有多个订单项-->
         <collection property="productOrderIItemList"
                     ofType="com.lt.vo.order.ProductOrderItemVO">

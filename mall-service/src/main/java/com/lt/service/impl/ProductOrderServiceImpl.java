@@ -3,8 +3,10 @@ package com.lt.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lt.common.ErrorCode;
 import com.lt.common.PageRequest;
 import com.lt.entity.ProductOrder;
+import com.lt.exception.BusinessException;
 import com.lt.mapper.ProductOrderMapper;
 import com.lt.service.ProductOrderService;
 import com.lt.utils.UserThreadLocalUtil;
@@ -35,6 +37,16 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
         Page<ProductOrderVO> page = new Page<>(current, pageSize, productOrderVOList.size());
         page.setRecords(productOrderVOList);
         return page;
+    }
+
+    @Override
+    public void updateOrderStatus(Integer productOrderId, Integer productOrderStatus) {
+        ProductOrder productOrder = productOrderMapper.selectById(productOrderId);
+        if (productOrder == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "该订单不存在");
+        }
+        productOrder.setProductOrderStatus(productOrderStatus);
+        productOrderMapper.updateById(productOrder);
     }
 }
 

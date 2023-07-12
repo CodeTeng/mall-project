@@ -22,4 +22,12 @@ public interface ProductOrderService extends IService<ProductOrder> {
      * @return 所有订单信息
      */
     Page<ProductOrderVO> getMyAllOrder(PageRequest pageRequest, Integer status);
+
+    /**
+     * 修改订单状态
+     *
+     * @param productOrderId     订单id
+     * @param productOrderStatus 订单状态
+     */
+    void updateOrderStatus(Integer productOrderId, Integer productOrderStatus);
 }
