@@ -10,11 +10,22 @@ server:
   connection-timeout: 5000ms
 
 spring:
+  # QQ 邮箱配置
+  mail:
+    host: smtp.qq.com # host地址（可以在你的邮箱设置里找到）
+    port: 587 # qq邮箱
+    username: 2300858713@qq.com #邮箱地址，对应host的主机
+    password: nnfrktqlzdaqdige #此处为邮箱授权码，qq独有
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
   # 配置mysql数据源
   datasource:
     druid:
       username: root
-      password: 19122133835
+      password: 806823
       url: jdbc:mysql://127.0.0.1:3306/mall?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
       driver-class-name: com.mysql.cj.jdbc.Driver
       # 初始化时建立物理连接的个数。初始化发生在显示调用 init 方法，或者第一次 getConnection 时
@@ -46,6 +57,12 @@ spring:
       filters: stat,wall
       # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  # redis 配置
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    database: 0
 
 # COS 对象存储
 cos:

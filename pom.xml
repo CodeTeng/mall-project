@@ -30,6 +30,7 @@
         <druid-spring-boot-starter.version>1.2.18</druid-spring-boot-starter.version>
         <jwt.version>0.9.1</jwt.version>
         <cos-api.version>5.6.89</cos-api.version>
+        <fastjson.version>2.0.15</fastjson.version>
     </properties>
 
     <!--使用依赖-->
@@ -91,6 +92,12 @@
                 <groupId>com.qcloud</groupId>
                 <artifactId>cos_api</artifactId>
                 <version>${cos-api.version}</version>
+            </dependency>
+            <!--fastJson-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -64,4 +64,14 @@ public class ProductController {
         }
         return ResultUtils.success(product);
     }
+
+    @GetMapping("/getProductByCategoryId")
+    @ApiOperation("根据分类id获取该分类下的所有商品")
+    public BaseResponse<Page<ProductSearchVO>> getProductByCategoryId(@RequestParam("categoryId") Integer categoryId) {
+        if (categoryId == null || categoryId <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+//        Page<ProductSearchVO> searchVOPage = productService.getProductByCategoryId(categoryId);
+        return ResultUtils.success(null);
+    }
 }

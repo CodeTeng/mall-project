@@ -54,7 +54,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
         QueryWrapper<Product> productQueryWrapper = new QueryWrapper<>();
         productQueryWrapper.ne("productIsEnabled", 1);
         productQueryWrapper.like(StringUtils.isNotBlank(productName), "productName", productName);
-        productQueryWrapper.select("productId", "productName", "productSalePrice");
+        productQueryWrapper.select("productId", "productName", "productSalePrice", "productTitle");
         productQueryWrapper.orderBy(StringUtils.isNotBlank(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_DESC), sortField);
         // 2. 分页查询
         Page<Product> productPage = productMapper.selectPage(new Page<>(current, pageSize), productQueryWrapper);

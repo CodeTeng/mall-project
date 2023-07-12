@@ -27,7 +27,7 @@ public class ProductSearchVO implements Serializable {
     @ApiModelProperty("商品主图")
     private String productPlanSrc;
     @ApiModelProperty("多个商品图片")
-    List<String> productImageSrcList;
+    private List<String> productImageSrcList;
     @ApiModelProperty("评论个数")
     private Integer reviewCount;
     @ApiModelProperty("总成交个数")
