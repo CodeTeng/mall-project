@@ -45,7 +45,7 @@ public class ProductOrderController {
         }
         Integer productOrderId = updateOrderDTO.getProductOrderId();
         Integer productOrderStatus = updateOrderDTO.getProductOrderStatus();
-        if (productOrderId == null || productOrderStatus == null) {
+        if (productOrderId == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         if (productOrderStatus != 0 && productOrderStatus != 1 && productOrderStatus != 2 && productOrderStatus != 3 && productOrderStatus != 4) {
