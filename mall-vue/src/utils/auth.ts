@@ -17,6 +17,7 @@ const setToken = (token: string) => {
 
 const clearToken = () => {
     localStorage.removeItem(TokenKey);
+    localStorage.removeItem(UserNameKey);
 };
 
 const getTokenWithPrefix = () => {

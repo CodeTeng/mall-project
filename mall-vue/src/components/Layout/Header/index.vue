@@ -2,13 +2,13 @@
   <div class="header-main">
     <div id="nav">
       <div class="nav_main">
-        <p id="container_login" v-show="!isOnLogin">
+        <p class="container_login" v-show="!isOnLogin">
           <em>嗨！欢迎来到Mall商城</em>
-          <a href="/login">登录</a>
-          <a href="/register">注册</a>
+          <router-link to="/login">登录</router-link>
+          <router-link to="/register">注册</router-link>
         </p>
 
-        <p id="container_login" v-show="isOnLogin">
+        <p class="container_login" v-show="isOnLogin">
           <em>Hi，</em>
           <router-link to="/userInfo" class="userName" target="_blank">{{
             getUserName()
@@ -20,7 +20,7 @@
         <ul class="quick_li">
           <li class="quick_li_MyTaobao">
             <div class="sn_menu">
-              <a href="/userInfo">我的Mall</a>
+              <router-link to="/userInfo">我的Mall</router-link>
               <!-- <div class="quick_menu">
                 <a href="/mall/order/0/10">已买到的宝贝</a>
                 <a href="#">已卖出的宝贝</a>
@@ -29,12 +29,12 @@
           </li>
           <li class="quick_li_MyTaobao">
             <div class="sn_menu">
-              <a href="/order">我的订单</a>
+              <router-link to="/order">我的订单</router-link>
             </div>
           </li>
           <li class="quick_li_cart">
             <img src="../../../assets/images/fore/WebsiteImage/buyCar.png" />
-            <a href="/cart">购物车</a>
+            <router-link to="/cart">购物车</router-link>
           </li>
           <!-- <li class="quick_li_menuItem">
             <div class="sn_menu">
@@ -48,13 +48,13 @@
           <li class="quick_li_separator"></li>
           <li class="quick_li_mobile">
             <img src="../../../assets/images/fore/WebsiteImage/mobile.png" />
-            <a href="#" title="Mall无线">手机版</a>
+            <router-link to="#" title="Mall无线">手机版</router-link>
             <div class="quick_qrcode">
               <img src="../../../assets/images/fore/WebsiteImage/qrcode.png" />
               <b></b>
             </div>
           </li>
-          <li class="quick_home"><a href="/mall">Mall商城</a></li>
+          <li class="quick_home"><router-link to="/mall">Mall商城</router-link></li>
         </ul>
       </div>
     </div>
@@ -74,7 +74,7 @@ const isOnLogin = isLogin();
 <style lang="scss" scoped>
 .header-main {
   width: 100%;
-  height: 100px;
+  height: 60px;
 }
 
 /*头部样式*/
@@ -122,7 +122,7 @@ const isOnLogin = isLogin();
   text-decoration: none;
 }
 
-.nav_main > #container_login {
+.nav_main > .container_login {
   position: absolute;
   top: 0;
   left: 0;
@@ -131,7 +131,7 @@ const isOnLogin = isLogin();
   margin: 0;
 }
 
-#container_login > em {
+.container_login > em {
   font-style: normal;
 }
 
