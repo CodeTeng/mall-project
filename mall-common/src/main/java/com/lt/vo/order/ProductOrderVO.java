@@ -26,5 +26,5 @@ public class ProductOrderVO implements Serializable {
     @ApiModelProperty("订单状态（0：待买家付款；1：待卖家发货；2：买家确认；3：交易成功； 4：取消交易")
     private Integer productOrderStatus;
     @ApiModelProperty("商品订单项")
-    private List<ProductOrderItemVO> productOrderIItemList;
+    private List<ProductOrderItemVO> productOrderItemList;
 }

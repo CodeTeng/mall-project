@@ -10,7 +10,7 @@ import com.lt.exception.BusinessException;
 import com.lt.service.ProductOrderItemService;
 import com.lt.service.ProductService;
 import com.lt.service.ReviewService;
-import com.lt.vo.ProductSearchVO;
+import com.lt.vo.product.ProductSearchVO;
 import com.lt.vo.product.DetailedProductVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

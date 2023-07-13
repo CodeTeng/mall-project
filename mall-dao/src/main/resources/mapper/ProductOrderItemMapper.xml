@@ -19,4 +19,26 @@
         productOrderItemProductId,productOrderItemOrderId,productOrderItemUserId,
         productOrderItemUserMessage
     </sql>
+
+    <select id="getMyCart" resultType="com.lt.vo.cart.CartVO">
+        select productOrderItemId,
+               productOrderItemNumber,
+               productOrderItemPrice,
+               productId,
+               categoryId,
+               categoryName,
+               productName,
+               productSalePrice,
+               categoryName,
+               (select productImageSrc
+                from productimage
+                where productImageProductId = productId
+                  and productImageType = 0
+                limit 1) productImageSrc
+        from productorderitem
+                 inner join product on productOrderItemProductId = productId
+                 inner join category on categoryId = productCategoryId
+        where productOrderItemUserId = #{userId}
+          and productOrderItemOrderId is null
+    </select>
 </mapper>

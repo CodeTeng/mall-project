@@ -3,7 +3,7 @@ package com.lt.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lt.entity.Product;
-import com.lt.vo.ProductSearchVO;
+import com.lt.vo.product.ProductSearchVO;
 import com.lt.vo.product.DetailedProductVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

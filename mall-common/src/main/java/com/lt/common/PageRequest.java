@@ -15,9 +15,9 @@ import lombok.Data;
 @ApiModel("分页请求")
 public class PageRequest {
     @ApiModelProperty(name = "current", value = "当前页号", required = true)
-    private long current = 1;
+    private int current = 1;
     @ApiModelProperty(name = "pageSize", value = "页面大小 默认10页", required = true)
-    private long pageSize = 10;
+    private int pageSize = 10;
     @ApiModelProperty(name = "sortField", value = "排序字段")
     private String sortField;
     @ApiModelProperty(name = "sortOrder", value = "排序规则 默认降序")

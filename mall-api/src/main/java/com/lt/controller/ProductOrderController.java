@@ -1,6 +1,7 @@
 package com.lt.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lt.common.BaseResponse;
 import com.lt.common.ErrorCode;
 import com.lt.common.PageRequest;
@@ -14,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @description:
@@ -28,13 +30,19 @@ public class ProductOrderController {
     private ProductOrderService productOrderService;
 
     @GetMapping("/getMyAllOrder")
-    @ApiOperation(value = "分页获取我的所有订单", notes = "status代表获取类型，null获取所有,0待付款,1待发货,2待收货,3已完成,4取消交易")
-    public BaseResponse<Page<ProductOrderVO>> getMyAllOrder(@RequestParam(value = "status", required = false) Integer status, PageRequest pageRequest) {
+    @ApiOperation(value = "分页获取我的所有订单", notes = "status代表获取类型，-1获取所有,0待付款,1待发货,2待收货,3已完成,4取消交易")
+    public BaseResponse<PageInfo<ProductOrderVO>> getMyAllOrder(@RequestParam(value = "status", required = false) Integer status, PageRequest pageRequest) {
         if (pageRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        Page<ProductOrderVO> productOrderVOPage = productOrderService.getMyAllOrder(pageRequest, status);
-        return ResultUtils.success(productOrderVOPage);
+        if (status == null || (status != -1 && status != 0 && status != 1 && status != 2 && status != 3 && status != 4)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 分页
+        PageHelper.startPage(pageRequest.getCurrent(), pageRequest.getPageSize());
+        List<ProductOrderVO> productOrderVOList = productOrderService.getMyAllOrder(pageRequest, status);
+        PageInfo<ProductOrderVO> pageInfo = new PageInfo<>(productOrderVOList);
+        return ResultUtils.success(pageInfo);
     }
 
     @PostMapping("/updateOrderStatus")

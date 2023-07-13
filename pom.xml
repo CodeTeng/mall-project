@@ -31,6 +31,7 @@
         <jwt.version>0.9.1</jwt.version>
         <cos-api.version>5.6.89</cos-api.version>
         <fastjson.version>2.0.15</fastjson.version>
+        <pagehelper.version>1.4.7</pagehelper.version>
     </properties>
 
     <!--使用依赖-->
@@ -98,6 +99,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+            <!-- pagehelper-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

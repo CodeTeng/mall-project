@@ -6,11 +6,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lt.dto.product.ProductCategoryDTO;
 import com.lt.dto.product.ProductSearchDTO;
 import com.lt.entity.Product;
-import com.lt.vo.product.ProductParameter;
-import com.lt.vo.ProductSearchVO;
+import com.lt.vo.product.ProductSearchVO;
 import com.lt.vo.product.DetailedProductVO;
-
-import java.util.List;
 
 /**
  * @author teng

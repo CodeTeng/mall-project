@@ -1,11 +1,12 @@
 package com.lt.service;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lt.common.PageRequest;
 import com.lt.entity.ProductOrder;
 import com.lt.vo.order.ProductOrderVO;
+
+import java.util.List;
 
 /**
  * @author teng
@@ -21,7 +22,7 @@ public interface ProductOrderService extends IService<ProductOrder> {
      * @param status      获取类型
      * @return 所有订单信息
      */
-    Page<ProductOrderVO> getMyAllOrder(PageRequest pageRequest, Integer status);
+    List<ProductOrderVO> getMyAllOrder(PageRequest pageRequest, Integer status);
 
     /**
      * 修改订单状态

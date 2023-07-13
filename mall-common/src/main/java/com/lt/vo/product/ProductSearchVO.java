@@ -1,4 +1,4 @@
-package com.lt.vo;
+package com.lt.vo.product;
 
 import com.lt.entity.ProductImage;
 import io.swagger.annotations.ApiModel;

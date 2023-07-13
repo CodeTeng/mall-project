@@ -53,7 +53,7 @@
         inner join productorderitem on productOrderItemOrderId = productOrderId
         inner join product on productId = productOrderItemProductId
         where productOrderUserId = #{userId}
-        <if test="status != null">
+        <if test="status != -1">
             and productOrderStatus = #{status}
         </if>
         order by productOrderId desc
@@ -66,7 +66,7 @@
         <result property="productOrderPayDate" column="productOrderPayDate"/>
         <result property="productOrderStatus" column="productOrderStatus"/>
         <!--一个订单可以有多个订单项-->
-        <collection property="productOrderIItemList"
+        <collection property="productOrderItemList"
                     ofType="com.lt.vo.order.ProductOrderItemVO">
             <id property="productOrderItemId" column="productOrderItemId"/>
             <result property="productOrderItemPrice" column="productOrderItemPrice"/>

@@ -1,6 +1,5 @@
 package com.lt.service.impl;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lt.common.ErrorCode;
 import com.lt.common.PageRequest;
@@ -27,15 +26,10 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
     private ProductOrderMapper productOrderMapper;
 
     @Override
-    public Page<ProductOrderVO> getMyAllOrder(PageRequest PageRequest, Integer status) {
+    public List<ProductOrderVO> getMyAllOrder(PageRequest PageRequest, Integer status) {
         // 获取当前用户id
         Integer userId = UserThreadLocalUtil.getUserId();
-        long current = PageRequest.getCurrent();
-        long pageSize = PageRequest.getPageSize();
-        List<ProductOrderVO> productOrderVOList = productOrderMapper.getMyAllOrder(status, userId);
-        Page<ProductOrderVO> page = new Page<>(current, pageSize, productOrderVOList.size());
-        page.setRecords(productOrderVOList);
-        return page;
+        return productOrderMapper.getMyAllOrder(status, userId);
     }
 
     @Override
