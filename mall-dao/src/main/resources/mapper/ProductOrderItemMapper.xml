@@ -41,4 +41,10 @@
         where productOrderItemUserId = #{userId}
           and productOrderItemOrderId is null
     </select>
+
+    <update id="updateOrderItemMessage">
+        update productorderitem
+        set productOrderItemUserMessage = #{productOrderItemUserMessage}
+        where productOrderItemId = #{productOrderItemId}
+    </update>
 </mapper>

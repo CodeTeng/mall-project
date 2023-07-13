@@ -1,17 +1,21 @@
 package com.lt.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lt.common.BaseResponse;
 import com.lt.common.ErrorCode;
 import com.lt.common.PageRequest;
 import com.lt.common.ResultUtils;
+import com.lt.dto.order.AddOrderDTO;
+import com.lt.dto.order.AddOrderItemDTO;
 import com.lt.dto.order.UpdateOrderDTO;
 import com.lt.exception.BusinessException;
 import com.lt.service.ProductOrderService;
 import com.lt.vo.order.ProductOrderVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -61,5 +65,26 @@ public class ProductOrderController {
         }
         productOrderService.updateOrderStatus(productOrderId, productOrderStatus);
         return ResultUtils.success(Boolean.TRUE);
+    }
+
+    @PostMapping("/addOrder")
+    @ApiOperation("添加订单")
+    public BaseResponse<Boolean> addOrder(@RequestBody AddOrderDTO addOrderDTO) {
+        if (addOrderDTO == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        String productOrderAddress = addOrderDTO.getProductOrderAddress();
+        String productOrderDetailAddress = addOrderDTO.getProductOrderDetailAddress();
+        String productOrderReceiver = addOrderDTO.getProductOrderReceiver();
+        String productOrderMobile = addOrderDTO.getProductOrderMobile();
+        if (StringUtils.isAnyBlank(productOrderAddress, productOrderDetailAddress, productOrderReceiver, productOrderMobile)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请填写完整的收获人信息");
+        }
+        List<AddOrderItemDTO> addOrderItemDTOList = addOrderDTO.getAddOrderItemDTOList();
+        if (CollectionUtil.isEmpty(addOrderItemDTOList)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "暂无订单数据，无法提交订单");
+        }
+        productOrderService.addOrder(addOrderDTO);
+        return ResultUtils.success(true);
     }
 }

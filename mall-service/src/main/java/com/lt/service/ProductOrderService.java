@@ -3,6 +3,7 @@ package com.lt.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lt.common.PageRequest;
+import com.lt.dto.order.AddOrderDTO;
 import com.lt.entity.ProductOrder;
 import com.lt.vo.order.ProductOrderVO;
 
@@ -31,4 +32,11 @@ public interface ProductOrderService extends IService<ProductOrder> {
      * @param productOrderStatus 订单状态
      */
     void updateOrderStatus(Integer productOrderId, Integer productOrderStatus);
+
+    /**
+     * 添加订单
+     *
+     * @param addOrderDTO 添加订单DTO
+     */
+    void addOrder(AddOrderDTO addOrderDTO);
 }

@@ -24,6 +24,14 @@ public interface ProductOrderItemMapper extends BaseMapper<ProductOrderItem> {
      * @return 购物车信息
      */
     List<CartVO> getMyCart(@Param("userId") Integer userId);
+
+    /**
+     * 给卖家留言
+     *
+     * @param productOrderItemId          订单项id
+     * @param productOrderItemUserMessage 留言信息
+     */
+    void updateOrderItemMessage(@Param("productOrderItemId") Integer productOrderItemId, @Param("productOrderItemUserMessage") String productOrderItemUserMessage);
 }
 
 
