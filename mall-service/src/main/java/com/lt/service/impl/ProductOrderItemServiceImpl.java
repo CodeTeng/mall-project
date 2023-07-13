@@ -3,10 +3,12 @@ package com.lt.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lt.common.ErrorCode;
+import com.lt.dto.cart.AddCartDTO;
 import com.lt.entity.ProductOrderItem;
 import com.lt.exception.BusinessException;
 import com.lt.mapper.ProductOrderItemMapper;
 import com.lt.service.ProductOrderItemService;
+import com.lt.utils.UserThreadLocalUtil;
 import com.lt.vo.cart.CartVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -61,6 +63,22 @@ public class ProductOrderItemServiceImpl extends ServiceImpl<ProductOrderItemMap
         BigDecimal finalOrderItemPrice = commodityPrice.multiply(multiCount);
         productOrderItem.setProductOrderItemPrice(finalOrderItemPrice);
         productOrderItemMapper.updateById(productOrderItem);
+    }
+
+    @Override
+    public void addCartItem(AddCartDTO addCartDTO) {
+        Integer userId = UserThreadLocalUtil.getUserId();
+        Integer productId = addCartDTO.getProductId();
+        BigDecimal productSalePrice = addCartDTO.getProductSalePrice();
+        Integer productOrderItemNumber = addCartDTO.getProductOrderItemNumber();
+        // 单价乘以数量
+        BigDecimal productOrderItemPrice = productSalePrice.multiply(new BigDecimal(productOrderItemNumber));
+        ProductOrderItem productOrderItem = new ProductOrderItem();
+        productOrderItem.setProductOrderItemProductId(productId);
+        productOrderItem.setProductOrderItemUserId(userId);
+        productOrderItem.setProductOrderItemNumber(productOrderItemNumber);
+        productOrderItem.setProductOrderItemPrice(productOrderItemPrice);
+        productOrderItemMapper.insert(productOrderItem);
     }
 }
 

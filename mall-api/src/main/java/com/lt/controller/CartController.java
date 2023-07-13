@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.lt.common.BaseResponse;
 import com.lt.common.ErrorCode;
 import com.lt.common.ResultUtils;
+import com.lt.dto.cart.AddCartDTO;
 import com.lt.exception.BusinessException;
 import com.lt.service.ProductOrderItemService;
 import com.lt.utils.UserThreadLocalUtil;
@@ -48,10 +49,10 @@ public class CartController {
         return ResultUtils.success("删除成功");
     }
 
-    @PostMapping("/updateCartItm/{orderItemId}")
-    @ApiOperation("更新购物车中的订单信息")
-    public BaseResponse<Boolean> updateCartItm(@PathVariable("orderItemId") Integer orderItemId,
-                                               @RequestParam("productOrderItemNumber") Integer productOrderItemNumber) {
+    @PostMapping("/updateCartItem/{orderItemId}")
+    @ApiOperation(value = "更新购物车中的订单信息", notes = "需要订单项id和商品的数量")
+    public BaseResponse<Boolean> updateCartItem(@PathVariable("orderItemId") Integer orderItemId,
+                                                @RequestParam("productOrderItemNumber") Integer productOrderItemNumber) {
         if (orderItemId == null || orderItemId <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -59,6 +60,24 @@ public class CartController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "商品数量至少为1");
         }
         productOrderItemService.updateCartItm(orderItemId, productOrderItemNumber);
+        return ResultUtils.success(true);
+    }
+
+    @PostMapping("/addCartItem")
+    @ApiOperation("添加商品到购物车中")
+    public BaseResponse<Boolean> addCartItem(@RequestBody AddCartDTO addCartDTO) {
+        if (addCartDTO == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Integer productId = addCartDTO.getProductId();
+        Integer productOrderItemNumber = addCartDTO.getProductOrderItemNumber();
+        if (productId == null || productId <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        if (productOrderItemNumber == null || productOrderItemNumber <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "商品数量至少为1");
+        }
+        productOrderItemService.addCartItem(addCartDTO);
         return ResultUtils.success(true);
     }
 }

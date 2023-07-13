@@ -2,6 +2,7 @@ package com.lt.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lt.dto.cart.AddCartDTO;
 import com.lt.entity.ProductOrderItem;
 import com.lt.vo.cart.CartVO;
 
@@ -32,8 +33,15 @@ public interface ProductOrderItemService extends IService<ProductOrderItem> {
     /**
      * 更新购物车中的订单信息
      *
-     * @param orderItemId 订单id
+     * @param orderItemId            订单id
      * @param productOrderItemNumber 商品数量
      */
     void updateCartItm(Integer orderItemId, Integer productOrderItemNumber);
+
+    /**
+     * 添加商品到购物车中
+     *
+     * @param addCartDTO 添加购物车DTO
+     */
+    void addCartItem(AddCartDTO addCartDTO);
 }
