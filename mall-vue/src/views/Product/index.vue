@@ -10,14 +10,16 @@
             <span>综合</span>
             <span class="orderByAsc"></span>
           </li>
+
           <li data-name="productCreateDate">
             <span>新品</span>
             <span class="orderByAsc"></span>
           </li>
+
           <li data-name="productSalePrice">
             <span style="position: relative; left: 3px">价格</span>
-            <span class="orderByDesc" style="bottom: 5px; left: 6px"></span>
-            <span class="orderByAsc" style="top: 4px; right: 5px"></span>
+            <span class="orderByAsc"></span>
+
           </li>
         </ul>
       </div>
@@ -30,11 +32,11 @@
           :key="item.productId"
         >
           <div class="context_product">
-            <a :href="'/product/info/' + item.productId" target="_blank"
+            <router-link :to="'/product/info/' + item.productId"
               ><img
                 class="context_product_imgMain"
                 :src="bindImg(item.productImageSrcList[0])"
-            /></a>
+            /></router-link>
             <ul class="context_product_imgList">
               <li v-for="imgurl in item.productImageSrcList" :key="imgurl">
                 <img :src="bindImg(imgurl)" />
@@ -44,9 +46,9 @@
               <span>¥</span>{{ item.productSalePrice }}
             </p>
             <p class="context_product_name">
-              <a :href="'/mall/product/' + item.productId" target="_blank">{{
+              <router-link :to="'/mall/product/' + item.productId" >{{
                 item.productName
-              }}</a>
+              }}</router-link>
             </p>
             <p class="context_product_shop">
               <span>贤趣女装 /大衣旗舰店</span>
@@ -66,6 +68,15 @@
           </div>
         </div>
       </div>
+      <el-pagination
+          background
+          v-model:current-page="searchQuery.current"
+          :page-size="15"
+          layout="prev, pager, next"
+          v-model:total="pageTotal"
+          @current-change="currentChange"
+          class="el-page"
+      />
     </div>
 
     <!-- 未查询到的结果界面 -->
@@ -101,6 +112,7 @@
 import { useRoute } from "vue-router";
 import { productSearchApi } from "../../api/product";
 import { bindImg } from "../../utils";
+import {productSearchRequest} from "../../api/product/type";
 const route = useRoute();
 const isProductNull = ref<boolean>(true);
 
@@ -108,13 +120,22 @@ const isProductNull = ref<boolean>(true);
 const productName = ref<any>();
 productName.value = route.query?.productName;
 
-const searchQuery = ref<any>({
+
+const searchQuery = ref<productSearchRequest>({
   current: 1,
-  pageSize: 10,
+  pageSize: 15,
   productName: "",
   sortField: undefined,
   sortOrder: undefined,
 });
+
+const pageTotal = ref<number>(0);
+
+// 分页响应
+const currentChange = ()=>{
+  doSearch();
+}
+
 
 interface productInfo {
   productId: number;
@@ -124,6 +145,11 @@ interface productInfo {
   productSalePrice: number;
   reviewCount: number;
   totalTransactionCount: number;
+}
+
+// 排序
+const doSort = ()=>{
+  doSearch();
 }
 
 const productList = ref<productInfo[]>();
@@ -137,6 +163,7 @@ const doSearch = () => {
       console.log("请求成功");
       isProductNull.value = false;
       productList.value = res.data.records;
+      pageTotal.value = res.data.total;
       if (productList.value?.length === 0) {
         isProductNull.value = true;
       }
@@ -146,8 +173,19 @@ const doSearch = () => {
     }
   });
 };
+
+onMounted(()=>{
+  doSearch()
+})
 doSearch();
 </script>
+
+<style scoped>
+.el-page{
+  margin-left: 150px;
+  margin-bottom: 30px;
+}
+</style>
 
 <!-- 列表样式 -->
 <style lang="scss" scoped>

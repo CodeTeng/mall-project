@@ -15,12 +15,17 @@ import './styles/reset.scss';
 import 'element-plus/dist/index.css'
 import { ElMessage } from 'element-plus'
 
+// 导入样式
+import './assets/css/bootstrap-select.min.css'
+import './assets/css/bootstrap.min.css'
+import './assets/css/fore_main.css'
 
 
 const app = createApp(App)
 app.use(piniaStore)
 app.use(router)
 app.use(ElMessage)
+
 // 全局导入svg
 app.component('svg-icon', svgIcon)
 

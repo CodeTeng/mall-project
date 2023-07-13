@@ -269,7 +269,7 @@
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { getAddress, register } from "../../api/user";
+import {register } from "../../api/user";
 import { useRouter } from "vue-router";
 const router = useRouter();
 

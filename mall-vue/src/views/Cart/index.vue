@@ -4,103 +4,691 @@
     <Search title="购物车" :isShowLi="false" :isShowSearch="true" />
 
     <div class="content">
-      <el-table
-        ref="multipleTableRef"
-        :data="tableData"
-        style="width: 100%"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" width="55" />
-        <el-table-column label="Date" width="120">
-          <template #default="scope">{{ scope.row.date }}</template>
-        </el-table-column>
-        <el-table-column property="name" label="Name" width="120" />
-        <el-table-column
-          property="address"
-          label="Address"
-          show-overflow-tooltip
-        />
-      </el-table>
-      <div style="margin-top: 20px">
-        <el-button @click="toggleSelection([tableData[1], tableData[2]])"
-          >Toggle selection status of second and third rows</el-button
-        >
-        <el-button @click="toggleSelection()">Clear selection</el-button>
+
+
+
+      <div id="J_FilterBar">
+        <ul id="J_CartSwitch">
+          <li>
+            <router-link to="/cart" class="J_MakePoint">
+              <em>全部商品</em>
+              <span class="number">2</span>
+            </router-link>
+          </li>
+        </ul>
+        <div class="cart-sum">
+          <span class="pay-text">已选商品（不含运费）</span>
+          <strong class="price"><em id="J_SmallTotal"><span
+              class="total-symbol">&nbsp;</span>0.00</em></strong>
+          <a id="J_SmallSubmit" class="submit-btn submit-btn-disabled">结&nbsp;算</a>
+        </div>
+        <div class="wrap-line">
+          <div class="floater"></div>
+        </div>
       </div>
+      <table id="J_CartMain">
+        <thead>
+        <tr>
+          <th class="selectAll_th"><input type="checkbox" class="cbx_select" id="cbx_select_all"><label
+              for="cbx_select_all">全选</label></th>
+          <th width="474px" class="productInfo_th"><span>商品信息</span></th>
+          <th width="120px"><span>单价</span></th>
+          <th width="120px"><span>数量</span></th>
+          <th width="120px"><span>金额</span></th>
+          <th width="84px"><span>操作</span></th>
+          <th hidden>ID</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr class="orderItem_category">
+          <td colspan="6"><span ></span><span
+              class="category_shop">店铺：贤趣女装 /大衣旗舰店</span>
+          </td>
+        </tr>
+        <tr class="orderItem_info">
+          <td class="tbody_checkbox"><input type="checkbox" class="cbx_select"
+                                            id="cbx_orderItem_select_285"
+                                            name="orderItem_id"><label
+              for="cbx_orderItem_select_285"></label></td>
+          <td><img class="orderItem_product_image"
+                   src="static/images/item/productSinglePicture/e95d4a9d-ebe9-4f12-975b-2e94e98aa2ef.jpg"
+                   style="width: 80px;height: 80px;"/><span class="orderItem_product_name"><a
+              href="/mall/product/1">2018春装新款韩版潮学生宽松薄款卫衣女长袖ins超火的上衣服外套</a></span>
+          </td>
+          <td><span
+              class="orderItem_product_price">￥79.0</span>
+          </td>
+          <td>
+            <div class="item_amount">
+              <a href="javascript:void(0)" onclick="up(this)"
+                 class="J_Minus no_minus">-</a>
+              <input type="text" value="1"/>
+              <a href="javascript:void(0)" onclick="down(this)" class="J_Plus">+</a>
+            </div>
+          </td>
+          <td>
+            <span class="orderItem_product_realPrice">￥79.0</span>
+          </td>
+          <td><a href="javascript:void(0)" onclick="removeItem('285')"
+                 class="remove_order">删除</a></td>
+          <td>
+            <input type="hidden" class="input_orderItem" name="285"/>
+          </td>
+        </tr>
+
+        <tr class="orderItem_category">
+          <td colspan="6"><span ></span><span
+              class="category_shop">店铺：贤趣女装 /大衣旗舰店</span>
+          </td>
+        </tr>
+        <tr class="orderItem_info">
+          <td class="tbody_checkbox"><input type="checkbox" class="cbx_select"
+                                            id="cbx_orderItem_select_286"
+                                            name="orderItem_id"><label
+              for="cbx_orderItem_select_286"></label></td>
+          <td><img class="orderItem_product_image"
+                   src="static/images/item/productSinglePicture/10064111-027b-4b72-8ec8-5fde13ef7615.jpg"
+                   style="width: 80px;height: 80px;"/><span class="orderItem_product_name"><a
+              href="/mall/product/21">2018新款运动服套装女装潮韩版时尚春秋季大码衣服休闲卫衣两件套</a></span>
+          </td>
+          <td><span
+              class="orderItem_product_price">￥139.0</span>
+          </td>
+          <td>
+            <div class="item_amount">
+              <a href="javascript:void(0)" onclick="up(this)"
+                 class="J_Minus no_minus">-</a>
+              <input type="text" value="1"/>
+              <a href="javascript:void(0)" onclick="down(this)" class="J_Plus">+</a>
+            </div>
+          </td>
+          <td>
+            <span class="orderItem_product_realPrice">￥139.0</span>
+          </td>
+          <td><a href="javascript:void(0)" onclick="removeItem('286')"
+                 class="remove_order">删除</a></td>
+          <td>
+            <input type="hidden" class="input_orderItem" name="286"/>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+      <div id="J_FloatBar">
+        <div id="J_SelectAll2">
+          <div class="cart_checkbox">
+            <input class="J_checkboxShop" id="J_SelectAllCbx2" type="checkbox" value="true"/>
+            <label for="J_SelectAllCbx2" title="勾选购物车内所有商品"></label>
+          </div>
+          <span class="span_selectAll">&nbsp;全选</span>
+        </div>
+        <div class="operations">
+          <a href="javascript:void(0)" onclick="remove()">删除</a>
+        </div>
+        <div class="float-bar-right">
+          <div id="J_ShowSelectedItems">
+            <span class="txt">已选商品</span>
+            <em id="J_SelectedItemsCount">0</em>
+            <span class="txt">件</span>
+          </div>
+          <div class="price_sum">
+            <span class="txt">合计（不含运费）:</span>
+            <strong class="price">
+              <em id="J_Total">
+                <span class="total_symbol">&nbsp;  ￥</span>
+                <span class="total_value"> 0.00</span>
+              </em>
+            </strong>
+          </div>
+          <div class="btn_area">
+            <a href="javascript:void(0)" id="J_Go" onclick="create(this)">
+              <span>结&nbsp;算</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="modal fade" id="modalDiv" tabindex="-1" role="dialog" aria-labelledby="modalDiv" aria-hidden="true"
+         data-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">提示</h4>
+          </div>
+          <div class="modal-body">您确定要取消该宝贝吗？</div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="btn-ok">确定</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-close">关闭</button>
+            <input type="hidden" id="order_id_hidden">
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-interface User {
-  date: string;
-  name: string;
-  address: string;
-}
 
-interface ProductType {
-  productId: number;
-  productImageSrc: string;
-}
-
-const multipleTableRef = ref();
-const multipleSelection = ref<User[]>([]);
-const toggleSelection = (rows?: User[]) => {
-  if (rows) {
-    rows.forEach((row) => {
-      multipleTableRef.value!.toggleRowSelection(row, undefined);
-    });
-  } else {
-    multipleTableRef.value!.clearSelection();
-  }
-};
-const handleSelectionChange = (val: User[]) => {
-  multipleSelection.value = val;
-};
-
-const tableData: User[] = [
-  {
-    date: "2016-05-03",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-02",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-04",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-01",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-08",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-06",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-07",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-];
 </script>
 
+<!--主体样式-->
 <style lang="scss" scoped>
 .content {
-  width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 1230px;
+  margin: auto;
+  min-height: 400px;
+  padding-bottom: 60px;
+  color: #666;
+}
+
+.content > #crumbs {
+  overflow: hidden;
+  color: #000;
+  margin: 20px 0 10px 0;
+  height: 18px;
+}
+
+.content > #crumbs > .cart-tip {
+  font-size: 12px;
+  float: right;
+  color: gray;
+}
+
+.content > #crumbs > .cart-tip > a {
+  color: #36c;
+}
+
+.content > #empty {
+  padding: 88px 0 100px 156px;
+  background: url(../../assets/images/fore/WebsiteImage/T1TvXUXnNjXXXXXXXX-100-100.png) no-repeat 40px 86px;
+  position: relative;
+}
+
+.content > #empty > h2 {
+  font: 700 14px/20px Arial;
+  color: #000000;
+}
+
+.content > #empty li {
+  font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
+  margin-top: 12px;
+  color: #000;
+}
+
+.content > #empty a {
+  font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
+  color: #36c;
+  margin-left: 3px;
+}
+
+.content > #J_FilterBar {
+  overflow: hidden;
+  font-size: 12px;
+  position: relative;
+}
+
+.content > #J_FilterBar > #J_CartSwitch {
+  overflow: hidden;
+  height: 33px;
+}
+
+.content > #J_FilterBar > #J_CartSwitch > li {
+  float: left;
+  font-weight: 700;
+  font-size: 16px;
+  height: 16px;
+  line-height: 1.1;
+  font-family: 'Hiragino Sans GB', 'Lantinghei SC', 'Microsoft Yahei', SimSun, serif;
+  text-align: center;
+  padding: 0 0 15px 0;
+  cursor: pointer;
+  margin-left: -1px;
+}
+
+.content #J_CartSwitch > li > a {
+  padding-left: 15px;
+  color: #3c3c3c;
+}
+
+.content #J_CartSwitch > li > a:hover {
+  text-decoration: none;
+}
+
+.content #J_CartSwitch > li > a > em {
+  color: #FF0036;
+  font-style: normal;
+}
+
+.content #J_CartSwitch > li > a > span {
+  color: #FF0036;
+  font-size: 14px;
+  margin: 0 30px 0 0;
+  font-weight: 400;
+  font-family: Verdana, Tahoma, arial, serif;
+}
+
+.content > #J_FilterBar > .cart-sum {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 25px;
+  line-height: 25px;
+  font-size: 12px;
+}
+
+.content .cart-sum > .pay-text {
+  line-height: 25px;
+}
+
+.content .cart-sum > .price {
+  font-family: Arial, Verdana, serif;
+  font-weight: 700;
+  margin-right: 5px;
+  color: #FF0036;
+}
+
+.content .cart-sum > .price > #J_SmallTotal {
+  font-family: Verdana, Arial, serif;
+  padding-left: 2px;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.total-symbol {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.cart-sum .submit-btn {
+  display: inline-block;
+  width: 55px;
+  color: #FFFFFF;
+  background: #F40;
+  border-radius: 2px;
+  text-align: center;
+  cursor: pointer;
+  font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
+  line-height: 25px;
+}
+
+.cart-sum .submit-btn.submit-btn-disabled {
+  background: #aaa;
+  color: #FFFFFF;
+  cursor: not-allowed;
+}
+
+.cart-sum .submit-btn:hover {
+  text-decoration: none;
+}
+
+.content > #J_FilterBar > .wrap-line {
+  background: #e6e6e6;
+  height: 2px;
+  position: relative;
+}
+
+.content > #J_FilterBar > .wrap-line > .floater {
+  width: 123px;
+  left: -1px;
+  background: #FF0036;
+  height: 2px;
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+}
+
+.content > #J_CartMain {
+  width: 100%;
+  min-height: 210px;
+}
+
+#J_CartMain > thead {
+  height: 50px;
+  line-height: 50px;
+  color: #3c3c3c;
+}
+
+#J_CartMain > thead .selectAll_th {
+  text-align: left;
+  position: relative;
+  height: 50px;
+  width: 45px;
+}
+
+.selectAll_th label {
+  font-weight: normal;
+}
+
+#J_CartMain > thead .productInfo_th {
+  padding-left: 91px;
+}
+
+#J_CartMain > thead th {
+  font: 12px 'Microsoft YaHei UI';
+}
+
+#J_CartMain > tbody tr.orderItem_category {
+  position: relative;
+  height: 38px;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+
+tr.orderItem_category span.shop_logo {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: -3px 6px 0 20px;
+  background: url(../../assets/images/fore/WebsiteImage/TB1boCXfmCWBuNjy0FhXXb6EVXa-800-600.png) no-repeat -20px -105px;
+}
+
+tr.orderItem_category span.category_shop {
+  font-size: 12px;
+  color: #3c3c3c;
+}
+
+#J_CartMain > tbody tr.orderItem_info {
+  border: 1px solid #cccccc;
+  background: #fcfcfc;
+  min-height: 119px;
+}
+
+#J_CartMain > tbody tr.orderItem_info.orderItem_selected {
+  background: #fff8e1;
+}
+
+tr.orderItem_info > td {
+  padding: 20px 0;
+}
+
+tr.orderItem_info > .tbody_checkbox {
+  text-align: center;
+}
+
+tr.orderItem_info .orderItem_product_image {
+}
+
+tr.orderItem_info .orderItem_product_name {
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 12px;
+  max-width: 400px;
+  max-height: 36px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+tr.orderItem_info .orderItem_product_name > a {
+  color: #3c3c3c;
+}
+
+tr.orderItem_info .orderItem_product_name > a:hover {
+  color: #ff0036;
+}
+
+tr.orderItem_info .orderItem_product_price {
+  color: #3c3c3c;
+  font-weight: 700;
+  font-size: 12px;
+  font-family: Verdana, Tahoma, Arial, serif;
+}
+
+tr.orderItem_info .item_amount {
+  width: 77px;
+  height: 25px;
+  overflow: hidden;
+  position: relative;
+}
+
+tr.orderItem_info .item_amount > a {
+  display: block;
+  width: 17px;
+  height: 23px;
+  border: 1px solid #e5e5e5;
+  background: #F0F0F0;
+  text-align: center;
+  line-height: 23px;
+  color: #444;
+}
+
+tr.orderItem_info .item_amount > a:hover {
+  text-decoration: none;
+}
+
+tr.orderItem_info .item_amount > a.J_Minus {
+  float: left;
+}
+
+tr.orderItem_info .item_amount > a.J_Plus {
+  float: right;
+}
+
+tr.orderItem_info .item_amount > a.no_minus {
+  color: #e5e5e5 !important;
+}
+
+tr.orderItem_info .item_amount > input[type=text] {
+  width: 39px;
+  height: 15px;
+  border: 1px solid #aaaaaa;
+  color: #343434;
+  text-align: center;
+  padding: 4px 0;
+  background-color: #FFFFFF;
+  position: absolute;
+  left: 18px;
+  top: 0;
+  font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
+  line-height: 15px;
+}
+
+tr.orderItem_info .orderItem_product_realPrice {
+  font-family: Verdana, Tahoma, Arial, serif;
+  font-style: normal;
+  color: #FF0036;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+tr.orderItem_info .remove_order {
+  display: block;
+  color: #3c3c3c;
+  font-size: 12px;
+  height: 15px;
+
+}
+
+tr.orderItem_info .remove_order:hover {
+  color: #FF0036;
+}
+
+.content > #J_FloatBar {
+  margin-top: 15px;
+  height: 50px;
+  overflow: hidden;
+  background: #e5e5e5;
+}
+
+#J_FloatBar > #J_SelectAll2 {
+  float: left;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 5px;
+  font: 12px tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
+}
+
+#J_SelectAll2 > .cart_checkbox {
+  float: left;
+  vertical-align: middle;
+  position: relative;
+  overflow: hidden;
+  line-height: 50px;
+}
+
+.cart_checkbox > input[type="checkbox"] + label:before {
+  margin-right: .2em;
+}
+
+#J_SelectAll2 > span {
+  float: left;
+  line-height: 50px;
+  color: #000;
+}
+
+#J_FloatBar > .operations {
+  float: left;
+  line-height: 50px;
+  height: 50px;
+}
+
+.operations > a {
+  margin-left: 25px;
+  float: left;
+  color: #3c3c3c;
+  font: 12px/50px tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif
+}
+
+.operations > a:hover {
+  color: #FF0036;
+}
+
+#J_FloatBar > .float-bar-right {
+  float: right;
+  padding-left: 20px;
+  background: #e5e5e5;
+  height: 100%;
+}
+
+.float-bar-right > #J_ShowSelectedItems {
+  cursor: pointer;
+  height: 48px;
+  color: #3c3c3c;
+  float: left;
+  font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
+}
+
+#J_ShowSelectedItems > .txt {
+  float: left;
+  display: inline-block;
+  line-height: 48px;
+}
+
+#J_ShowSelectedItems > #J_SelectedItemsCount {
+  float: left;
+  display: inline-block;
+  line-height: 50px;
+  padding: 0 5px;
+  color: #FF0036;
+  font-weight: 700;
+  font-size: 18px;
+  font-style: normal;
+  font-family: tohoma, Arial, serif;
+}
+
+.float-bar-right > .price_sum {
+  padding-left: 40px;
+  height: 48px;
+  color: #3c3c3c;
+  float: left;
+}
+
+.price_sum > .txt {
+  float: left;
+  color: #3c3c3c;
+  font: 12px/48px tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif
+}
+
+.price_sum > .price {
+  color: #FF0036;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 48px;
+  font-family: Arial, serif;
+  vertical-align: middle;
+  float: left;
+  display: inline-block;
+}
+
+.price_sum > .price > #J_Total {
+  font-weight: 700;
+  font-size: 22px;
+  padding: 0 3px;
+  font-family: tohoma, Arial, serif;
+  font-style: normal;
+}
+
+#J_Total > .total_symbol {
+  font-size: 14px;
+  font-family: Verdana, serif;
+  font-weight: 400;
+  color: #FF0036;
+}
+
+.float-bar-right > .btn_area {
+  float: left;
+}
+
+.btn_area > a {
+  display: block;
+  background: #B0B0B0;
+  color: #FFF;
+  border-left: 1px solid #e7e7e7;
+  width: 119px;
+  cursor: not-allowed;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-family: "Lantinghei SC", "Microsoft YaHei UI", serif;
+  font-size: 20px;
+  border-radius: 2px;
+}
+
+.btn_area > a:hover {
+  text-decoration: none;
+}
+
+.btn_area > a.selected {
+  background: #FF0036;
+  cursor: pointer;
+}
+
+.btn_area > a.selected:hover {
+  background: #FF0026;
+}
+
+input[type="checkbox"] + label::before {
+  content: "\a0";
+  position: relative;
+  bottom: 1px;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 18px;
+  width: 13px;
+  height: 13px;
+  margin-right: .4em;
+  border: 1px solid #cccccc;
+  text-indent: .15em;
+  line-height: 1;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label::before {
+  background-color: #ff7874;
+  background-clip: content-box;
+  padding: 2px;
+}
+
+input[type="checkbox"] {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
 }
 </style>

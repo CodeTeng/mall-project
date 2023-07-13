@@ -36,11 +36,17 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Order',
                 component: () => import('../views/Order/index.vue')
             },
-            // 商品信息
+            // 商品搜索主页
             {
                 path: 'product',
                 name: 'Product',
                 component: () => import('../views/Product/index.vue')
+            },
+            // 商品详情信息
+            {
+                path: 'product/info/:id',
+                name: 'ProductInfo',
+                component: () => import('../views/Product/components/info.vue')
             },
         ]
     },

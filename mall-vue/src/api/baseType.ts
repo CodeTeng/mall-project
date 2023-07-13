@@ -1,4 +1,5 @@
-interface pageType {
+
+export interface pageType {
     // 	当前页号
     current: number;
     // 页面大小 默认10页
