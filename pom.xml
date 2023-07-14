@@ -32,6 +32,7 @@
         <cos-api.version>5.6.89</cos-api.version>
         <fastjson.version>2.0.15</fastjson.version>
         <pagehelper.version>1.4.7</pagehelper.version>
+        <alipay-sdk-java.version>4.35.171.ALL</alipay-sdk-java.version>
     </properties>
 
     <!--使用依赖-->
@@ -105,6 +106,12 @@
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.version}</version>
+            </dependency>
+            <!-- 支付宝模拟支付 -->
+            <dependency>
+                <groupId>com.alipay.sdk</groupId>
+                <artifactId>alipay-sdk-java</artifactId>
+                <version>${alipay-sdk-java.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -15,6 +15,7 @@ import com.lt.service.ProductOrderService;
 import com.lt.vo.order.ProductOrderVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 @Api(tags = "商品订单控制器")
+@Slf4j
 public class ProductOrderController {
     @Resource
     private ProductOrderService productOrderService;
