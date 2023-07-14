@@ -1,8 +1,11 @@
 package com.lt.controller;
 
+import cn.hutool.core.util.PhoneUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lt.common.BaseResponse;
 import com.lt.common.ErrorCode;
 import com.lt.common.ResultUtils;
+import com.lt.dto.user.FindPwdDTO;
 import com.lt.dto.user.UpdateUserDTO;
 import com.lt.dto.user.UserLoginDTO;
 import com.lt.dto.user.UserRegisterDTO;
@@ -62,6 +65,13 @@ public class UserController {
         }
         if (!userPassword.equals(confirmPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "登录密码与确认密码不相同");
+        }
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userName", userName);
+        User user = userService.getOne(queryWrapper);
+        if (user != null) {
+            // 已存在该用户名，不允许重复添加
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "已存在该用户名，请换一个名称");
         }
         Integer userId = userService.register(userRegisterDTO);
         return ResultUtils.success(userId);
@@ -141,5 +151,23 @@ public class UserController {
         user.setUserPassword(userPassword);
         userService.updateById(user);
         return ResultUtils.success(Boolean.TRUE);
+    }
+
+    @PostMapping("/findPassword")
+    @ApiOperation("找回密码")
+    public BaseResponse<String> findPassword(@RequestBody FindPwdDTO findPwdDTO) {
+        if (findPwdDTO == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        String mobile = findPwdDTO.getMobile();
+        String userName = findPwdDTO.getUserName();
+        if (StringUtils.isAnyBlank(userName, mobile)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请填写完整的用户信息");
+        }
+        if (!PhoneUtil.isMobile(mobile)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请填写正确的手机号");
+        }
+        userService.findPassword(userName, mobile);
+        return ResultUtils.success("你的新密码已发送至手机号，请注意查收");
     }
 }

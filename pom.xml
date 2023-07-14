@@ -33,6 +33,7 @@
         <fastjson.version>2.0.15</fastjson.version>
         <pagehelper.version>1.4.7</pagehelper.version>
         <alipay-sdk-java.version>4.35.171.ALL</alipay-sdk-java.version>
+        <aliyun-java-sdk.version>4.5.16</aliyun-java-sdk.version>
     </properties>
 
     <!--使用依赖-->
@@ -107,11 +108,17 @@
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.version}</version>
             </dependency>
-            <!-- 支付宝模拟支付 -->
+            <!--支付宝模拟支付-->
             <dependency>
                 <groupId>com.alipay.sdk</groupId>
                 <artifactId>alipay-sdk-java</artifactId>
                 <version>${alipay-sdk-java.version}</version>
+            </dependency>
+            <!--阿里云SDK-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>${aliyun-java-sdk.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

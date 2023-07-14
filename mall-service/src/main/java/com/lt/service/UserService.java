@@ -2,7 +2,6 @@ package com.lt.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lt.common.BaseResponse;
 import com.lt.dto.user.UserLoginDTO;
 import com.lt.dto.user.UserRegisterDTO;
 import com.lt.entity.User;
@@ -29,4 +28,12 @@ public interface UserService extends IService<User> {
      * @return 用户token
      */
     String login(UserLoginDTO userLoginDTO);
+
+    /**
+     * 找回密码
+     *
+     * @param userName 用户名
+     * @param mobile   手机号
+     */
+    void findPassword(String userName, String mobile);
 }

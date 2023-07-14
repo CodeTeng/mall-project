@@ -18,8 +18,8 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     private List<String> urls = Arrays.asList(
-            "/**/login", "/**/register", "/swagger-ui.html",
-            "/swagger-resources/**", "/webjars/**", "/doc.html/**",
+            "/**/login", "/**/register", "/**/findPassword", "/druid/index.html",
+            "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/doc.html/**",
             "/v2/**", "/product/**", "/address/**", "/category/**"
     );
 

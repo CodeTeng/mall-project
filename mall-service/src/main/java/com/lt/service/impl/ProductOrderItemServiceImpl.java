@@ -80,6 +80,11 @@ public class ProductOrderItemServiceImpl extends ServiceImpl<ProductOrderItemMap
         productOrderItem.setProductOrderItemPrice(productOrderItemPrice);
         productOrderItemMapper.insert(productOrderItem);
     }
+
+    @Override
+    public List<CartVO> getCartListByItemId(List<Integer> orderItemIdList) {
+        return productOrderItemMapper.getCartListByItemId(orderItemIdList);
+    }
 }
 
 

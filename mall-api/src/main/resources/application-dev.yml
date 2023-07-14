@@ -53,10 +53,41 @@ spring:
       # 是否自动回收超时连接
       poolPreparedStatements: true
       maxPoolPreparedStatementPerConnectionSize: 20
-      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-      filters: stat,wall
       # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 配置监控统计拦截的filters，stat:监控统计、log4j：日志记录、wall：防御sql注入
+      filters: stat,wall,slf4j
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 2000
+          db-type: mysql
+        slf4j:
+          enabled: true
+          statement-log-error-enabled: true
+          statement-create-after-log-enabled: false
+          statement-close-after-log-enabled: false
+          result-set-open-after-log-enabled: false
+          result-set-close-after-log-enabled: false
+      use-global-data-source-stat: true
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # SQL监控
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: 123456
+        allow:
+        deny:
+        reset-enable: false
+        url-pattern: /druid/*
+      # web拦截
+      web-stat-filter:
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.css,/druid/*"
+        enabled: true
+        session-stat-enable: true       # 开启session统计功能
+        session-stat-max-count: 1000    # session的最大个数,默认100
+      aop-patterns: com.lt.mapper.* #Spring监控开启
   # redis 配置
   redis:
     host: localhost
@@ -90,3 +121,10 @@ alipay:
   format: JSON
   encoding: UTF-8
   signType : RSA2
+
+# 阿里云短信配置
+sms:
+  signName: 木子Teng
+  templateCode: SMS_271575818
+  accessKey: LTAI5tLusUCwhsSwSueRXnCu
+  secret: iiyT1Xh9yfBJ9yixvg6MGqnZLpmAkX

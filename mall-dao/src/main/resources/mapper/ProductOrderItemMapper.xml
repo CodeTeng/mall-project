@@ -42,6 +42,31 @@
           and productOrderItemOrderId is null
     </select>
 
+    <select id="getCartListByItemId" resultType="com.lt.vo.cart.CartVO">
+        select productOrderItemId,
+        productOrderItemNumber,
+        productOrderItemPrice,
+        productId,
+        categoryId,
+        categoryName,
+        productName,
+        productSalePrice,
+        categoryName,
+        (select productImageSrc
+        from productimage
+        where productImageProductId = productId
+        and productImageType = 0
+        limit 1) productImageSrc
+        from productorderitem
+        inner join product on productOrderItemProductId = productId
+        inner join category on categoryId = productCategoryId
+        where productOrderItemId in
+        <foreach collection="orderItemIdList" item="orderItemId" separator="," open="(" close=")">
+            #{orderItemId}
+        </foreach>
+        and productOrderItemOrderId is null
+    </select>
+
     <update id="updateOrderItemMessage">
         update productorderitem
         set productOrderItemUserMessage = #{productOrderItemUserMessage}

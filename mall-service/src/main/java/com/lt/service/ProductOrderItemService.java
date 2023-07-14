@@ -44,4 +44,12 @@ public interface ProductOrderItemService extends IService<ProductOrderItem> {
      * @param addCartDTO 添加购物车DTO
      */
     void addCartItem(AddCartDTO addCartDTO);
+
+    /**
+     * 根据订单项id获取订单信息
+     *
+     * @param orderItemIdList 订单项id List
+     * @return 数据信息
+     */
+    List<CartVO> getCartListByItemId(List<Integer> orderItemIdList);
 }

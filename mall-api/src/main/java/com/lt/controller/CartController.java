@@ -80,4 +80,14 @@ public class CartController {
         productOrderItemService.addCartItem(addCartDTO);
         return ResultUtils.success(true);
     }
+
+    @GetMapping("/getCartListByItemId")
+    @ApiOperation("根据订单项id获取订单信息")
+    public BaseResponse<List<CartVO>> getCartListByItemId(@RequestParam("orderItemIdList") List<Integer> orderItemIdList) {
+        if (CollectionUtil.isEmpty(orderItemIdList)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        List<CartVO> cartVOList = productOrderItemService.getCartListByItemId(orderItemIdList);
+        return ResultUtils.success(cartVOList);
+    }
 }
