@@ -54,7 +54,7 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addOrder(AddOrderDTO addOrderDTO) {
+    public Integer addOrder(AddOrderDTO addOrderDTO) {
         Integer userId = UserThreadLocalUtil.getUserId();
         ProductOrder productOrder = new ProductOrder();
         BeanUtils.copyProperties(addOrderDTO, productOrder);
@@ -66,6 +66,7 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
         productOrder.setProductOrderPayDate(new Date());
         // 添加订单
         productOrderMapper.insert(productOrder);
+        Integer productOrderId = productOrder.getProductOrderId();
         // 添加订单项留言
         List<AddOrderItemDTO> addOrderItemDTOList = addOrderDTO.getAddOrderItemDTOList();
         for (AddOrderItemDTO addOrderItemDTO : addOrderItemDTOList) {
@@ -75,9 +76,10 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
                 // 没有留言
                 continue;
             }
-            // 给卖家留言
-            productOrderItemMapper.updateOrderItemMessage(productOrderItemId, productOrderItemUserMessage);
+            // 更新订单项
+            productOrderItemMapper.updateOrderItem(productOrderItemId, productOrderId, productOrderItemUserMessage);
         }
+        return productOrderId;
     }
 }
 

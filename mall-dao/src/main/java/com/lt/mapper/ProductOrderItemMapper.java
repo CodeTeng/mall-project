@@ -29,9 +29,10 @@ public interface ProductOrderItemMapper extends BaseMapper<ProductOrderItem> {
      * 给卖家留言
      *
      * @param productOrderItemId          订单项id
+     * @param productOrderId              生成的订单id
      * @param productOrderItemUserMessage 留言信息
      */
-    void updateOrderItemMessage(@Param("productOrderItemId") Integer productOrderItemId, @Param("productOrderItemUserMessage") String productOrderItemUserMessage);
+    void updateOrderItem(@Param("productOrderItemId") Integer productOrderItemId, @Param("productOrderId") Integer productOrderId, @Param("productOrderItemUserMessage") String productOrderItemUserMessage);
 
     /**
      * 根据订单项id获取订单信息

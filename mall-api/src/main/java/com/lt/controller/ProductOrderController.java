@@ -71,7 +71,7 @@ public class ProductOrderController {
 
     @PostMapping("/addOrder")
     @ApiOperation("添加订单")
-    public BaseResponse<Boolean> addOrder(@RequestBody AddOrderDTO addOrderDTO) {
+    public BaseResponse<Integer> addOrder(@RequestBody AddOrderDTO addOrderDTO) {
         if (addOrderDTO == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -86,7 +86,7 @@ public class ProductOrderController {
         if (CollectionUtil.isEmpty(addOrderItemDTOList)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "暂无订单数据，无法提交订单");
         }
-        productOrderService.addOrder(addOrderDTO);
-        return ResultUtils.success(true);
+        Integer productOrderId = productOrderService.addOrder(addOrderDTO);
+        return ResultUtils.success(productOrderId);
     }
 }

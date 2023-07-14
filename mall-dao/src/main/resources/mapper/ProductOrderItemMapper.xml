@@ -67,9 +67,10 @@
         and productOrderItemOrderId is null
     </select>
 
-    <update id="updateOrderItemMessage">
+    <update id="updateOrderItem">
         update productorderitem
-        set productOrderItemUserMessage = #{productOrderItemUserMessage}
+        set productOrderItemUserMessage = #{productOrderItemUserMessage},
+            productOrderItemOrderId     = #{productOrderId}
         where productOrderItemId = #{productOrderItemId}
     </update>
 </mapper>

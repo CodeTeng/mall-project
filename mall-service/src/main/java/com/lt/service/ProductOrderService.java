@@ -37,6 +37,7 @@ public interface ProductOrderService extends IService<ProductOrder> {
      * 添加订单
      *
      * @param addOrderDTO 添加订单DTO
+     * @return 订单id
      */
-    void addOrder(AddOrderDTO addOrderDTO);
+    Integer addOrder(AddOrderDTO addOrderDTO);
 }
