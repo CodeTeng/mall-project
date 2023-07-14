@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lt.dto.cart.AddCartDTO;
 import com.lt.entity.ProductOrderItem;
 import com.lt.vo.cart.CartVO;
+import com.lt.vo.cart.ConfirmCartVO;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public interface ProductOrderItemService extends IService<ProductOrderItem> {
      *
      * @param addCartDTO 添加购物车DTO
      */
-    void addCartItem(AddCartDTO addCartDTO);
+    Integer addCartItem(AddCartDTO addCartDTO);
 
     /**
      * 根据订单项id获取订单信息
@@ -52,4 +53,12 @@ public interface ProductOrderItemService extends IService<ProductOrderItem> {
      * @return 数据信息
      */
     List<CartVO> getCartListByItemId(List<Integer> orderItemIdList);
+
+    /**
+     * 根据订单id获取订单项信息
+     *
+     * @param productOrderId 订单id
+     * @return 订单项信息
+     */
+    List<ConfirmCartVO> getCartListByOrderId(Integer productOrderId);
 }

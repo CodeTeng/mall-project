@@ -10,6 +10,7 @@ import com.lt.mapper.ProductOrderItemMapper;
 import com.lt.service.ProductOrderItemService;
 import com.lt.utils.UserThreadLocalUtil;
 import com.lt.vo.cart.CartVO;
+import com.lt.vo.cart.ConfirmCartVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +67,7 @@ public class ProductOrderItemServiceImpl extends ServiceImpl<ProductOrderItemMap
     }
 
     @Override
-    public void addCartItem(AddCartDTO addCartDTO) {
+    public Integer addCartItem(AddCartDTO addCartDTO) {
         Integer userId = UserThreadLocalUtil.getUserId();
         Integer productId = addCartDTO.getProductId();
         BigDecimal productSalePrice = addCartDTO.getProductSalePrice();
@@ -79,11 +80,17 @@ public class ProductOrderItemServiceImpl extends ServiceImpl<ProductOrderItemMap
         productOrderItem.setProductOrderItemNumber(productOrderItemNumber);
         productOrderItem.setProductOrderItemPrice(productOrderItemPrice);
         productOrderItemMapper.insert(productOrderItem);
+        return productOrderItem.getProductOrderItemId();
     }
 
     @Override
     public List<CartVO> getCartListByItemId(List<Integer> orderItemIdList) {
         return productOrderItemMapper.getCartListByItemId(orderItemIdList);
+    }
+
+    @Override
+    public List<ConfirmCartVO> getCartListByOrderId(Integer productOrderId) {
+        return productOrderItemMapper.getCartListByOrderId(productOrderId);
     }
 }
 

@@ -9,6 +9,7 @@ import com.lt.exception.BusinessException;
 import com.lt.service.ProductOrderItemService;
 import com.lt.utils.UserThreadLocalUtil;
 import com.lt.vo.cart.CartVO;
+import com.lt.vo.cart.ConfirmCartVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -65,7 +66,7 @@ public class CartController {
 
     @PostMapping("/addCartItem")
     @ApiOperation("添加商品到购物车中")
-    public BaseResponse<Boolean> addCartItem(@RequestBody AddCartDTO addCartDTO) {
+    public BaseResponse<Integer> addCartItem(@RequestBody AddCartDTO addCartDTO) {
         if (addCartDTO == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -77,8 +78,8 @@ public class CartController {
         if (productOrderItemNumber == null || productOrderItemNumber <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "商品数量至少为1");
         }
-        productOrderItemService.addCartItem(addCartDTO);
-        return ResultUtils.success(true);
+        Integer productOrderItemId = productOrderItemService.addCartItem(addCartDTO);
+        return ResultUtils.success(productOrderItemId);
     }
 
     @GetMapping("/getCartListByItemId")
@@ -89,5 +90,15 @@ public class CartController {
         }
         List<CartVO> cartVOList = productOrderItemService.getCartListByItemId(orderItemIdList);
         return ResultUtils.success(cartVOList);
+    }
+
+    @GetMapping("/getCartListByOrderId")
+    @ApiOperation("根据订单id获取订单项信息")
+    public BaseResponse<List<ConfirmCartVO>> getCartListByOrderId(@RequestParam("productOrderId") Integer productOrderId) {
+        if (productOrderId == null || productOrderId <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        List<ConfirmCartVO> confirmCartVOList = productOrderItemService.getCartListByOrderId(productOrderId);
+        return ResultUtils.success(confirmCartVOList);
     }
 }

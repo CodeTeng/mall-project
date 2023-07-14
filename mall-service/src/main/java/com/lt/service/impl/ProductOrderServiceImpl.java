@@ -49,6 +49,13 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "该订单不存在");
         }
         productOrder.setProductOrderStatus(productOrderStatus);
+        if (productOrderStatus == 1) {
+            // 投递时间
+            productOrder.setProductOrderDeliveryDate(new Date());
+        } else if (productOrderStatus == 2) {
+            // 确认时间
+            productOrder.setProductOrderConfirmDate(new Date());
+        }
         productOrderMapper.updateById(productOrder);
     }
 

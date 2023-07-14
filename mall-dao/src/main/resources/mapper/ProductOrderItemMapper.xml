@@ -67,6 +67,30 @@
         and productOrderItemOrderId is null
     </select>
 
+    <select id="getCartListByOrderId" resultType="com.lt.vo.cart.ConfirmCartVO">
+        select productOrderItemId,
+               productOrderItemNumber,
+               productOrderItemPrice,
+               productId,
+               categoryId,
+               categoryName,
+               productName,
+               productSalePrice,
+               categoryName,
+               (select productImageSrc
+                from productimage
+                where productImageProductId = productId
+                  and productImageType = 0
+                limit 1) productImageSrc,
+               productOrderPayDate,
+               productOrderCode
+        from productorderitem
+                 inner join product on productOrderItemProductId = productId
+                 inner join category on categoryId = productCategoryId
+                 inner join productorder on productOrderItemOrderId = productOrderId
+        where productOrderItemOrderId = #{productOrderId}
+    </select>
+
     <update id="updateOrderItem">
         update productorderitem
         set productOrderItemUserMessage = #{productOrderItemUserMessage},

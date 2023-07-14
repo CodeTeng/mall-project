@@ -4,6 +4,7 @@ package com.lt.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lt.entity.ProductOrderItem;
 import com.lt.vo.cart.CartVO;
+import com.lt.vo.cart.ConfirmCartVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -41,6 +42,14 @@ public interface ProductOrderItemMapper extends BaseMapper<ProductOrderItem> {
      * @return 数据信息
      */
     List<CartVO> getCartListByItemId(@Param("orderItemIdList") List<Integer> orderItemIdList);
+
+    /**
+     * 根据订单id获取订单项信息
+     *
+     * @param productOrderId 订单id
+     * @return 订单项信息
+     */
+    List<ConfirmCartVO> getCartListByOrderId(@Param("productOrderId") Integer productOrderId);
 }
 
 
