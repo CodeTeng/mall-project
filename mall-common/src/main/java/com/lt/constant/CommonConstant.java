@@ -15,4 +15,6 @@ public interface CommonConstant {
      * 降序
      */
     String SORT_ORDER_DESC = "desc";
+
+    String RESET_PASSWORD = "12345678";
 }

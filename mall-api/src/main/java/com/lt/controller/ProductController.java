@@ -1,6 +1,8 @@
 package com.lt.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lt.common.BaseResponse;
 import com.lt.common.ErrorCode;
 import com.lt.common.ResultUtils;
@@ -17,6 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @description:
@@ -59,12 +62,16 @@ public class ProductController {
     }
 
     @GetMapping("/getProductByCategoryId")
-    @ApiOperation(value = "根据分类id分页查询商品信息", notes = "只能分页查询,不能进行排序")
-    public BaseResponse<Page<ProductSearchVO>> getProductByCategoryId(ProductCategoryDTO productCategoryDTO) {
+    @ApiOperation(value = "根据分类id分页查询商品信息", notes = "分页查询")
+    public BaseResponse<PageInfo<ProductSearchVO>> getProductByCategoryId(ProductCategoryDTO productCategoryDTO) {
         if (productCategoryDTO == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        Page<ProductSearchVO> productSearchVOPage = productService.getProductByCategoryId(productCategoryDTO);
-        return ResultUtils.success(productSearchVOPage);
+        int current = productCategoryDTO.getCurrent();
+        int pageSize = productCategoryDTO.getPageSize();
+        PageHelper.startPage(current, pageSize);
+        List<ProductSearchVO> productSearchVOList = productService.getProductByCategoryId(productCategoryDTO);
+        PageInfo<ProductSearchVO> pageInfo = new PageInfo<>(productSearchVOList);
+        return ResultUtils.success(pageInfo);
     }
 }

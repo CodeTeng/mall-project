@@ -9,6 +9,8 @@ import com.lt.entity.Product;
 import com.lt.vo.product.ProductSearchVO;
 import com.lt.vo.product.DetailedProductVO;
 
+import java.util.List;
+
 /**
  * @author teng
  * @description 针对表【product】的数据库操作Service
@@ -37,5 +39,5 @@ public interface ProductService extends IService<Product> {
      * @param productCategoryDTO 查询DTO
      * @return 商品信息
      */
-    Page<ProductSearchVO> getProductByCategoryId(ProductCategoryDTO productCategoryDTO);
+    List<ProductSearchVO> getProductByCategoryId(ProductCategoryDTO productCategoryDTO);
 }

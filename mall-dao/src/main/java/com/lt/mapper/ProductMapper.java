@@ -30,9 +30,11 @@ public interface ProductMapper extends BaseMapper<Product> {
      * 根据分类id获取商品信息
      *
      * @param categoryId 分类id
+     * @param sortField  排序字段
+     * @param sortOrder  排序方式
      * @return 商品信息
      */
-    List<ProductSearchVO> getProductByCategoryId(@Param("categoryId") Integer categoryId);
+    List<ProductSearchVO> getProductByCategoryId(@Param("categoryId") Integer categoryId, @Param("sortField") String sortField, @Param("sortOrder") String sortOrder);
 }
 
 

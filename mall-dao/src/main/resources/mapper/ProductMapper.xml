@@ -82,9 +82,20 @@
     <select id="getProductByCategoryId" resultMap="getProductByCategoryId">
         select productId, productName, productSalePrice, categoryName
         from product
-                 inner join category c on c.categoryId = product.productCategoryId
+        inner join category c on c.categoryId = product.productCategoryId
         where categoryId = #{categoryId}
-          and productIsEnabled != 1
+        and productIsEnabled != 1
+        <if test="sortField != null and sortField != ''">
+            order by productSalePrice
+            <choose>
+                <when test="sortOrder == 'desc'.toString()">
+                    desc
+                </when>
+                <when test="sortOrder == 'asc'.toString()">
+                    asc
+                </when>
+            </choose>
+        </if>
     </select>
 
     <!--封装商品信息数据-->

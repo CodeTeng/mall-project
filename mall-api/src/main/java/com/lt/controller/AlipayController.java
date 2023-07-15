@@ -62,7 +62,7 @@ public class AlipayController {
         if (money == null || StringUtils.isBlank(subject)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        // 订单号 20230714113649
+        // 订单号
         String productOrderCode = DateUtil.format(new Date(), "yyyyMMddHHmmss");
         Integer productOrderId = payDTO.getProductOrderId();
         ProductOrder productOrder = productOrderService.getById(productOrderId);
@@ -100,9 +100,10 @@ public class AlipayController {
         bizContent.put("subject", subject);
         bizContent.put("trade_time", System.currentTimeMillis());
         bizContent.put("product_code", "FAST_INSTANT_TRADE_PAY");
-
+        // 1个小时后支付失效
+        bizContent.put("time_expire", DateUtil.offsetHour(new Date(), 1));
         request.setBizContent(bizContent.toString());
-        AlipayTradePagePayResponse response = null;
+        AlipayTradePagePayResponse response;
         try {
             response = alipayClient.pageExecute(request);
             if (response.isSuccess()) {
@@ -134,8 +135,6 @@ public class AlipayController {
             for (int i = 0; i < values.length; i++) {
                 valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
             }
-            // 乱码解决，这段代码在出现乱码时使用
-            valueStr = new String(valueStr.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
             params.put(name, valueStr);
         }
         log.info("参数：{}", params);
@@ -146,12 +145,10 @@ public class AlipayController {
         if (!signVerified) {
             throw new BusinessException(ErrorCode.OPERATION_ERROR, "支付失败");
         }
-        // 商户订单号
         String outTradeNo = new String(request.getParameter("out_trade_no").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-        // 支付宝交易流水号
         String tradeNo = new String(request.getParameter("trade_no").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-        // 付款金额
-        float money = Float.parseFloat(new String(request.getParameter("total_amount").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
+        BigDecimal totalAmount = new BigDecimal(new String(request.getParameter("total_amount").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
+        double money = totalAmount.doubleValue();
         log.info("商户订单号=" + outTradeNo);
         log.info("支付宝交易号=" + tradeNo);
         log.info("付款金额=" + money);
@@ -165,6 +162,9 @@ public class AlipayController {
         queryWrapper.eq("productOrderCode", outTradeNo);
         queryWrapper.eq("productOrderUserId", userId);
         ProductOrder productOrder = productOrderService.getOne(queryWrapper);
+        if (productOrder == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "该订单不存在！");
+        }
         productOrder.setProductOrderStatus(1);
         productOrder.setProductOrderCode(outTradeNo);
         productOrder.setProductOrderPayDate(new Date());

@@ -102,16 +102,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
     }
 
     @Override
-    public Page<ProductSearchVO> getProductByCategoryId(ProductCategoryDTO productCategoryDTO) {
+    public List<ProductSearchVO> getProductByCategoryId(ProductCategoryDTO productCategoryDTO) {
         Integer categoryId = productCategoryDTO.getCategoryId();
-        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("productCategoryId", categoryId);
-        queryWrapper.ne("productIsEnabled", 1);
-        Page<Product> productPage = productMapper.selectPage(new Page<>(productCategoryDTO.getCurrent(), productCategoryDTO.getPageSize()), queryWrapper);
-        Page<ProductSearchVO> productSearchVOPage = new Page<>(productPage.getCurrent(), productPage.getSize(), productPage.getTotal());
-        List<ProductSearchVO> productSearchVOList = productMapper.getProductByCategoryId(categoryId);
-        productSearchVOPage.setRecords(productSearchVOList);
-        return productSearchVOPage;
+        String sortField = productCategoryDTO.getSortField();
+        String sortOrder = productCategoryDTO.getSortOrder();
+        return productMapper.getProductByCategoryId(categoryId, sortField, sortOrder);
     }
 }
 
