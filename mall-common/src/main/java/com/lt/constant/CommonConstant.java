@@ -16,5 +16,10 @@ public interface CommonConstant {
      */
     String SORT_ORDER_DESC = "desc";
 
+    /**
+     * 重置密码
+     */
     String RESET_PASSWORD = "12345678";
+
+    String DIRECT_URL = "http://localhost:5173/order";
 }
