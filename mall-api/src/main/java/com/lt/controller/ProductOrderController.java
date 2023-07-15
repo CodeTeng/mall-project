@@ -49,7 +49,7 @@ public class ProductOrderController {
         }
         // 分页
         PageHelper.startPage(pageRequest.getCurrent(), pageRequest.getPageSize());
-        List<ProductOrderVO> productOrderVOList = productOrderService.getMyAllOrder(pageRequest, status);
+        List<ProductOrderVO> productOrderVOList = productOrderService.getMyAllOrder(status);
         PageInfo<ProductOrderVO> pageInfo = new PageInfo<>(productOrderVOList);
         return ResultUtils.success(pageInfo);
     }
@@ -90,6 +90,8 @@ public class ProductOrderController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "暂无订单数据，无法提交订单");
         }
         Integer productOrderId = productOrderService.addOrder(addOrderDTO);
+        // 设置订单id 更新
+
         return ResultUtils.success(productOrderId);
     }
 

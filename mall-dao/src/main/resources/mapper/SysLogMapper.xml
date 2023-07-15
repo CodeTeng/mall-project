@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lt.mapper.SysLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.lt.entity.SysLog">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="requestUrl" column="requestUrl" jdbcType="VARCHAR"/>
+        <result property="requestParam" column="requestParam" jdbcType="VARCHAR"/>
+        <result property="requestIp" column="requestIp" jdbcType="VARCHAR"/>
+        <result property="cost" column="cost" jdbcType="BIGINT"/>
+        <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,requestUrl,requestParam,
+        requestIp,cost,createTime
+    </sql>
+</mapper>

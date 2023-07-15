@@ -3,7 +3,6 @@ package com.lt.service.impl;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lt.common.ErrorCode;
-import com.lt.common.PageRequest;
 import com.lt.dto.order.AddOrderDTO;
 import com.lt.dto.order.AddOrderItemDTO;
 import com.lt.entity.ProductOrder;
@@ -13,7 +12,6 @@ import com.lt.mapper.ProductOrderMapper;
 import com.lt.service.ProductOrderService;
 import com.lt.utils.UserThreadLocalUtil;
 import com.lt.vo.order.ProductOrderVO;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +34,7 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
     private ProductOrderItemMapper productOrderItemMapper;
 
     @Override
-    public List<ProductOrderVO> getMyAllOrder(PageRequest PageRequest, Integer status) {
+    public List<ProductOrderVO> getMyAllOrder(Integer status) {
         // 获取当前用户id
         Integer userId = UserThreadLocalUtil.getUserId();
         return productOrderMapper.getMyAllOrder(status, userId);
@@ -49,10 +47,10 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "该订单不存在");
         }
         productOrder.setProductOrderStatus(productOrderStatus);
-        if (productOrderStatus == 1) {
+        if (productOrderStatus == 2) {
             // 投递时间
             productOrder.setProductOrderDeliveryDate(new Date());
-        } else if (productOrderStatus == 2) {
+        } else if (productOrderStatus == 3) {
             // 确认时间
             productOrder.setProductOrderConfirmDate(new Date());
         }
@@ -79,10 +77,10 @@ public class ProductOrderServiceImpl extends ServiceImpl<ProductOrderMapper, Pro
         for (AddOrderItemDTO addOrderItemDTO : addOrderItemDTOList) {
             Integer productOrderItemId = addOrderItemDTO.getProductOrderItemId();
             String productOrderItemUserMessage = addOrderItemDTO.getProductOrderItemUserMessage();
-            if (StringUtils.isBlank(productOrderItemUserMessage)) {
-                // 没有留言
-                continue;
-            }
+//            if (StringUtils.isNotBlank(productOrderItemUserMessage)) {
+//                // 更新订单项
+//                productOrderItemMapper.updateOrderItem(productOrderItemId, productOrderId, productOrderItemUserMessage);
+//            }
             // 更新订单项
             productOrderItemMapper.updateOrderItem(productOrderItemId, productOrderId, productOrderItemUserMessage);
         }
