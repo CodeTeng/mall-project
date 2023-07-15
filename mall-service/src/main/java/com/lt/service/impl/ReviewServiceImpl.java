@@ -10,19 +10,15 @@ import com.lt.dto.review.ReviewProductDTO;
 import com.lt.entity.Review;
 import com.lt.entity.User;
 import com.lt.mapper.ReviewMapper;
-
 import com.lt.mapper.UserMapper;
 import com.lt.service.ReviewService;
-
 import com.lt.utils.UserThreadLocalUtil;
 import com.lt.vo.ReviewVO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,7 +63,7 @@ public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review>
         String sortOrder = getProductReviewDTO.getSortOrder();
         QueryWrapper<Review> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("reviewProductId", productId);
-        queryWrapper.orderBy(StringUtils.isNotBlank(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
+        queryWrapper.orderBy(true, sortOrder.equals(CommonConstant.SORT_ORDER_ASC), "reviewCreatedate");
         Page<Review> page = new Page<>(current, pageSize);
         Page<Review> reviewPage = reviewMapper.selectPage(page, queryWrapper);
         List<Review> reviewList = reviewPage.getRecords();
