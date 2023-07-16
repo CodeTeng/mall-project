@@ -14,8 +14,8 @@ spring:
   mail:
     host: smtp.qq.com # host地址（可以在你的邮箱设置里找到）
     port: 587 # qq邮箱
-    username: 2300858713@qq.com #邮箱地址，对应host的主机
-    password: nnfrktqlzdaqdige #此处为邮箱授权码，qq独有
+    username:  #邮箱地址，对应host的主机
+    password:  #此处为邮箱授权码，qq独有
     properties:
       mail:
         smtp:
@@ -112,12 +112,12 @@ cos:
 
 # 支付宝配置
 alipay:
-  appId: 9021000123608205
-  appPrivateKey: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCiMHirP0qOlS5BwhSS/Z1YF4XX/aW4yzD1sClWJPLmsMqL6Q2H0OmInxXOUhOtxZZJ1kH9VxPRJf1wanhZTClROP2ULIbJPNSGgplk81a8A9Qh0iNz6sI6UtWzs9PcxQSG1RCpXIs8PD1dezyUnHUO6sH/jdwqREZBotl3Vy3lEYwf5KCt2x7COMtqm+5+cxgYsSVTxqBf3QCz7wQb1ikuDmFaRNN9oAxmqo91ywR0hewJ+dTdmVmntU07Z/WYAk9ROTtNk8oaw9ElhY6kaixLh+HAPCsXrXU3+18IwNXOmDlV7MULl0RlBXyKS9UR4NqU+pE+dyn+69wA+3nxmQ81AgMBAAECggEAY9ZekVuWc4qVPNlRfOItNwrT0w9KMiSx8KsN5v87npH5PIKrV41cFEOJUsXnYzKbvrvrRx2RD0/JYKfJiX5+eIcSYWG/XqTZViuSbTf1jir1LBSEylgaU3imH8Z0hhOpI66IYRichOm4BJFVy008KYCNBti2TDZW4RRztSivEa/sthAa3wD6KCnMHhUoR/woKhbgx0QffhxujnKJZEC90Fd0EIo2Ql2YeiUzlLiS1I3K39yzm6CEUeHv429qqyx218A3w2g2Aq7P8u8WBM4SkInqIVVeXk4VDBztMw89bzUpwv25Jc/AaZ76kpnX9BgfnPspKmZMSyUvI/4cU3kfAQKBgQDm12J6h4AZrCXrnjdm61CVFPzJj/7Skgu1W+T9NirX03FPNrUt3c4XtlnlExvegVkOkTWhn82vdVxeGNVNZOGZdyqfvwKdtMytVhG27Qa2rREoRXiwI3Ymv4mYrpGKyuYaRWkU/s8GVB83qhkwOkPTAUOau0LRIdqqgNaambjnIQKBgQCz3adRA78vuO5iaELu01AZQTarTSj9ksB5TpB7SSgtHOZF1NWFb11uDx9fohPBqtRvORVNWH9m6qOMgDPQGRcg0HSf+dXwiiGDQ8AwRzu2tbLnP/RU625AiLPQH/QSR9hkiWdywMRlP6Vm0MMois3UiZt8JNv/TaGbpQr+Em5plQKBgQCbgoHvNZVQti4dmsqL5P62UBsz1nO+e3CzzqJnCrS2DNWKnbpUmdYbF1dcARGHRfAu5hgRN8yi5RdCtMwNhWaNsj/euhkTERfJte/dIbSiH9ktHg/96QXReLtDRmb571IwZI4z/KyPAOC+6TJq0PWcEn/unzSWGo5qyrzIDcMIwQKBgBkeGv91Rn2jlaaoaLBxUf403S2O2OqQU9Cc6BBPZwzlvEKENk0sACAefIMeXyPsdz4Q+qiSczgsDCrSvGmTF2e9tIuil/2/TG7IR052pCAfv5wLklNJjVv1uyaVT8A9yDpB9fBQexyohrCU9qvytku3676qZw6ACNFzetWAPWsBAoGAWgDWqvh+SdDDGTP19R6EgXVLxNbo19xQDmkoMe7NrIY1L7TTJXY8mkSGzqdC+epHLE+Bljjbs9hwfj2FSaXjT0frp0d8ep4W+RrXUqkOofnrWRXBmabUARIX+FxeBAtX60SuEe6yc8rXE3We1YvqagcPLAHZajY/M4RlavNOT98=
-  alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkN9IKh5D/4JnNNBTE+aAXPiOwoX51uuHx9ZovVV4/pRYKcL6FJZHMsxEZa5awzqMH4wsnLMRGU68eaE5i4LMvBZeaR8UmdBMbcyPtZlxqsyeIp2i0tXkmv5PPVu4PaIFzwI339+QuxcZbm/b7Orkanr2OeYw9TecR7XHymeia/KXW1L1qrJAidViGpJLC0oarWOf/mOWSjlWiGK+lmNFndA1V1+5OuGBYFAWBD0PAYbWL8ne+0VLnOdXNLSxCzq2/WfjEU3U29xgztxL2zhFxspKnEw54KHAhnRg9zid8s5wBe5ID/prgVBgwhmZ0aFpNtw8yV3xJMGyZeVExtWfgQIDAQAB
-  notifyUrl: http://gu5vwg.natappfree.cc/api/pay/notifyUrl
-  returnUrl: http://localhost:8081/api/pay/returnUrl
-  gatewayUrl: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+  appId: 
+  appPrivateKey: 
+  alipayPublicKey: 
+  notifyUrl: 
+  returnUrl: 
+  gatewayUrl: 
   format: JSON
   encoding: UTF-8
   signType : RSA2
@@ -125,6 +125,6 @@ alipay:
 # 阿里云短信配置
 sms:
   signName: mall商城
-  templateCode: SMS_462045367
+  templateCode: 
   accessKey:
   secret:
