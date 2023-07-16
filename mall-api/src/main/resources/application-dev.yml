@@ -105,8 +105,8 @@ spring:
 # COS 对象存储
 cos:
   client:
-    accessKey: AKIDDH9pHUSURBh1b4MSJxOd2EBuOkslQr55
-    secretKey: oa9WeYEhvvhHenxtc7ORGsIUWP6cv0ue
+    accessKey:
+    secretKey:
     region: ap-chongqing
     bucket: mall-1310538376
 
@@ -126,5 +126,5 @@ alipay:
 sms:
   signName: mall商城
   templateCode: SMS_462045367
-  accessKey: LTAI5tLusUCwhsSwSueRXnCu
-  secret: iiyT1Xh9yfBJ9yixvg6MGqnZLpmAkX
+  accessKey:
+  secret:
